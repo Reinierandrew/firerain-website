@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firerain</title>
+  <meta name="description" content="Practical AI and operations consulting for growing businesses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg:        #0F1117;
+      --surface:   #161820;
+      --surface-2: #1E2030;
+      --border:    #2A2D3E;
+      --border-2:  #363A52;
+      --text-1:    #E8E9F0;
+      --text-2:    #8B8FA8;
+      --text-3:    #5A5E78;
+      --blue:      #4C8BF5;
+      --blue-dim:  rgba(76, 139, 245, 0.12);
+      --blue-glow: rgba(76, 139, 245, 0.20);
+      --orange:    #F5A623;
+      --radius:    8px;
+      --radius-sm: 5px;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-1);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ---------- Layout ---------- */
+
+    .page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle radial glow behind the wordmark */
+    .page::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -56%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center, rgba(76, 139, 245, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* ---------- Wordmark ---------- */
+
+    .wordmark {
+      font-size: clamp(48px, 10vw, 80px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1;
+      color: var(--text-1);
+      margin-bottom: 28px;
+    }
+
+    .wordmark span {
+      color: var(--orange);
+    }
+
+    /* ---------- Descriptor ---------- */
+
+    .descriptor {
+      font-size: clamp(15px, 2.5vw, 17px);
+      font-weight: 400;
+      color: var(--text-2);
+      letter-spacing: -0.2px;
+      line-height: 1.55;
+      margin-bottom: 40px;
+    }
+
+    /* ---------- Divider ---------- */
+
+    .divider {
+      width: 32px;
+      height: 1px;
+      background: var(--border-2);
+      margin-bottom: 40px;
+    }
+
+    /* ---------- Coming soon ---------- */
+
+    .status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 36px;
+    }
+
+    /* ---------- Contact ---------- */
+
+    .contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--blue);
+      text-decoration: none;
+      padding: 10px 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--blue-dim);
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+    }
+
+    .contact a:hover {
+      border-color: var(--blue);
+      background: rgba(76, 139, 245, 0.18);
+      color: #7aabf8;
+    }
+
+    .contact a svg {
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* ---------- Footer ---------- */
+
+    footer {
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    footer p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 0.4px;
+    }
+
+    /* ---------- Mobile ---------- */
+
+    @media (max-width: 480px) {
+      .wordmark {
+        letter-spacing: -1px;
+      }
+
+      .page {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+    <div class="container">
+
+      <h1 class="wordmark">fire<span>rain</span></h1>
+
+      <p class="descriptor">Practical AI and operations consulting<br>for growing businesses.</p>
+
+      <div class="divider"></div>
+
+      <p class="status">Coming soon</p>
+
+      <div class="contact">
+        <a href="mailto:reinier@firerain.ai">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="M2 7l10 7 10-7"/>
+          </svg>
+          reinier@firerain.ai
+        </a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>firerain.ai</p>
+  </footer>
+
+</body>
+</html>
