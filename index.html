@@ -89,16 +89,14 @@
     /* ---------- Wordmark ---------- */
 
     .wordmark {
-      font-size: clamp(48px, 10vw, 80px);
-      font-weight: 700;
-      letter-spacing: -2px;
-      line-height: 1;
-      color: var(--text-1);
       margin-bottom: 28px;
+      line-height: 1;
     }
 
-    .wordmark span {
-      color: var(--orange);
+    .wordmark svg {
+      display: block;
+      width: clamp(280px, 75vw, 460px);
+      height: auto;
     }
 
     /* ---------- Descriptor ---------- */
@@ -193,7 +191,31 @@
   <main class="page">
     <div class="container">
 
-      <h1 class="wordmark">fire<span>rain</span></h1>
+      <h1 class="wordmark">
+        <!-- Firerain slash wordmark — black bg version (fire=white, rain=orange, slash white→orange) -->
+        <svg viewBox="0 0 360 110" xmlns="http://www.w3.org/2000/svg" aria-label="firerain">
+          <defs>
+            <linearGradient id="slash-grad-hero" x1="187" y1="-5" x2="145" y2="107" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#E87722"/>
+            </linearGradient>
+          </defs>
+          <text x="8" y="84"
+                font-family="'DM Sans', sans-serif"
+                font-weight="300"
+                font-size="76"
+                fill="#ffffff">fire</text>
+          <line x1="145" y1="107" x2="187" y2="-5"
+                stroke="url(#slash-grad-hero)"
+                stroke-width="2"
+                stroke-linecap="round"/>
+          <text x="222" y="84"
+                font-family="'DM Sans', sans-serif"
+                font-weight="300"
+                font-size="76"
+                fill="#E87722">rain</text>
+        </svg>
+      </h1>
 
       <p class="descriptor">Practical AI and operations consulting<br>for growing businesses.</p>
 
