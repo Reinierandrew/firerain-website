@@ -1,0 +1,28 @@
+<svg viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="firerain">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&amp;display=swap');</style>
+    <linearGradient id="slash-grad" x1="174" y1="-4" x2="174" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#00167a"/>
+      <stop offset="100%" stop-color="#ff751f"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="480" height="120" fill="#ffffff"/>
+  <!-- fire -->
+  <text x="10" y="94"
+        font-family="'DM Sans', sans-serif"
+        font-weight="400"
+        font-size="86"
+        fill="#00167a">fire</text>
+  <!-- diagonal slash -->
+  <line x1="152" y1="116" x2="196" y2="-4"
+        stroke="url(#slash-grad)"
+        stroke-width="2.5"
+        stroke-linecap="round"/>
+  <!-- rain -->
+  <text x="205" y="94"
+        font-family="'DM Sans', sans-serif"
+        font-weight="400"
+        font-size="86"
+        fill="#ff751f">rain</text>
+</svg>

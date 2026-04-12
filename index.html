@@ -1,222 +1,1039 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en-AU">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Firerain</title>
-  <meta name="description" content="Practical AI and operations consulting for growing businesses." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Firerain — Workflow automation for small businesses</title>
+<meta name="description" content="Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.">
+<link rel="icon" type="image/svg+xml" href="assets/logos/fr-icon-navy.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #F5EFE4;
+    --paper-deep:   #EDE4D3;
+    --paper-edge:   #D9CDB5;
+    --ink:          #1A1714;
+    --ink-soft:     #5C524A;
+    --ink-mute:     #7A6B5C;
+    --ember:        #ff751f;
+    --ember-deep:   #e0621a;
+    --brand-orange: #ff751f;
+    --brand-navy:   #00167a;
+    --olive:        #4A5438;
+    --rule:         #D9CDB5;
 
-    :root {
-      --bg:        #0F1117;
-      --surface:   #161820;
-      --surface-2: #1E2030;
-      --border:    #2A2D3E;
-      --border-2:  #363A52;
-      --text-1:    #E8E9F0;
-      --text-2:    #8B8FA8;
-      --text-3:    #5A5E78;
-      --blue:      #4C8BF5;
-      --blue-dim:  rgba(76, 139, 245, 0.12);
-      --blue-glow: rgba(76, 139, 245, 0.20);
-      --orange:    #ff751f;
-      --radius:    8px;
-      --radius-sm: 5px;
-    }
+    --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+    --sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-    html, body {
-      height: 100%;
-    }
+    --sidebar: 320px;
+    --content-max: 680px;
+  }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text-1);
-      font-family: 'DM Sans', -apple-system, sans-serif;
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    /* ---------- Layout ---------- */
+  ::selection { background: var(--ember); color: var(--paper); }
 
-    .page {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 24px;
+  a { color: var(--ember); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s ease; }
+  a:hover { border-bottom-color: var(--ember); }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar);
+    height: 100vh;
+    background: var(--brand-navy);
+    border-right: none;
+    padding: 42px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .brand { }
+  .brand__mark {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+  }
+  .brand__tag {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #B0B8C8;
+    max-width: 220px;
+  }
+  .brand__loc {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ember);
+  }
+
+  .nav { margin-top: 46px; }
+  .nav__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__item {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px dashed transparent;
+  }
+  .nav__num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #A0AABE;
+    letter-spacing: 0.05em;
+    min-width: 22px;
+  }
+  .nav__link {
+    font-family: var(--sans);
+    font-size: 14px;
+    color: #D0D6E0;
+    border-bottom: none;
+    transition: color .15s ease;
+  }
+  .nav__link:hover { color: var(--ember); border-bottom: none; }
+  .nav__item.is-active .nav__num { color: var(--ember); }
+  .nav__item.is-active .nav__link { color: #FFFFFF; }
+
+  .sidebar__foot { }
+  .cta-side {
+    display: block;
+    background: var(--ember);
+    color: var(--brand-navy);
+    padding: 14px 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    border: none;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .cta-side:hover {
+    background: var(--ember-deep);
+    color: var(--brand-navy);
+    transform: translateY(-1px);
+    border-bottom: none;
+  }
+  .cta-side__price {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    margin-top: 2px;
+    opacity: 0.85;
+  }
+  .sidebar__email {
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #A0AABE;
+    word-break: break-all;
+  }
+  .sidebar__email a { color: #A0AABE; }
+  .sidebar__email a:hover { color: var(--ember); }
+
+  /* ---------- MAIN ---------- */
+  main {
+    margin-left: var(--sidebar);
+    padding: 0;
+  }
+
+  .container {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  section {
+    padding: 110px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  section:last-child { border-bottom: none; }
+
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    margin: 0 0 24px;
+  }
+
+  h1 {
+    font-size: clamp(40px, 5.4vw, 68px);
+    line-height: 1.03;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin-bottom: 36px;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ember);
+  }
+
+  h2 {
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+  }
+  h2 em { font-style: italic; color: var(--ember); font-weight: 500; }
+
+  h3 {
+    font-size: 20px;
+    line-height: 1.25;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 0 0 20px;
+    max-width: 60ch;
+  }
+
+  .lead {
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 56ch;
+    margin-bottom: 40px;
+  }
+  .lead em {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 120px;
+  }
+  .hero__eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ember);
+    margin-bottom: 28px;
+  }
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 26px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .btn:hover {
+    background: var(--ember);
+    color: var(--paper);
+    transform: translateY(-1px);
+    border-bottom: none;
+  }
+  .btn--ember { background: var(--ember); color: var(--brand-navy); }
+  .btn--ember:hover { background: var(--ember-deep); color: var(--brand-navy); }
+
+  .hero__note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+
+  .ticker {
+    margin-top: 80px;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .ticker__track {
+    display: inline-block;
+    animation: scroll 40s linear infinite;
+  }
+  .ticker__track span { margin-right: 42px; }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ---------- CALL TOPICS EXPAND ---------- */
+  .call-topics {
+    margin-top: 32px;
+    max-width: 54ch;
+  }
+  .call-topics__toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--ember);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color .15s ease;
+  }
+  .call-topics__toggle:hover { color: var(--ember-deep); }
+  .call-topics__arrow {
+    font-size: 16px;
+    font-weight: 500;
+    transition: transform .25s ease;
+    display: inline-block;
+  }
+  .call-topics.is-open .call-topics__arrow { transform: rotate(45deg); }
+  .call-topics__list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease, margin .35s ease;
+    margin-top: 0;
+  }
+  .call-topics.is-open .call-topics__list {
+    max-height: 400px;
+    margin-top: 16px;
+  }
+
+  /* ---------- WHERE TIME GETS LOST ---------- */
+  .loss-line {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.25;
+    color: var(--ember);
+    margin: 32px 0 40px;
+  }
+  ul.plain {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--rule);
+  }
+  ul.plain li {
+    padding: 18px 0 18px 28px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    font-size: 17px;
+  }
+  ul.plain li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--ember);
+    font-family: var(--mono);
+  }
+
+  /* ---------- ROI CALCULATOR ---------- */
+  .calc-wrap {
+    background: var(--paper-deep);
+    border: 1px solid var(--paper-edge);
+    border-radius: 4px;
+    padding: 40px 44px;
+    margin-top: 32px;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 32px;
+  }
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--paper-edge);
+  }
+  .calc-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .calc-label {
+    font-size: 15px;
+    color: var(--ink);
+    flex: 1;
+  }
+  .calc-label small {
+    display: block;
+    color: var(--ink-mute);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .calc-input {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--paper-edge);
+    border-radius: 2px;
+    padding: 10px 14px;
+    width: 110px;
+    text-align: right;
+    transition: border-color .15s ease;
+  }
+  .calc-input:focus {
+    outline: none;
+    border-color: var(--ember);
+  }
+
+  .calc-result {
+    border-top: 2px solid var(--ink);
+    padding-top: 28px;
+    margin-top: 8px;
+  }
+  .calc-result__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+  }
+  .calc-result__row--big {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--paper-edge);
+    margin-bottom: 6px;
+  }
+  .calc-result__label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .calc-result__value {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .calc-result__value--big {
+    font-size: 38px;
+    color: var(--ember);
+  }
+  .calc-foot {
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--paper-edge);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .calc-foot__note {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: var(--display);
+    max-width: 32ch;
+  }
+
+  .pull {
+    margin: 40px 0 0;
+    padding: 28px 32px;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--ember);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* ---------- FLOW CARDS ---------- */
+  .container--wide {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+  .flow-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 40px;
+    margin-top: 36px;
+    position: relative;
+  }
+  .card {
+    background: var(--paper-deep);
+    border: 1px solid var(--paper-edge);
+    border-radius: 4px;
+    padding: 30px 28px;
+    display: flex;
+    flex-direction: column;
+    min-height: 220px;
+    transition: transform .15s ease, border-color .15s ease;
+    position: relative;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ember);
+  }
+  .card__num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .card h3 {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0 0 12px;
+  }
+  .card p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 auto;
+  }
+  .card__price {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--paper-edge);
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ember);
+    letter-spacing: 0.02em;
+  }
+
+  .flow-arrow {
+    position: absolute;
+    z-index: 2;
+  }
+  /* Right arrow: top row, between card 1 and 2 */
+  .flow-arrow--r1 {
+    top: calc(25% - 14px);
+    left: calc(50% - 14px);
+  }
+  /* Down arrow: centre, between rows */
+  .flow-arrow--down {
+    top: calc(50% - 14px);
+    left: calc(50% - 14px);
+  }
+  /* Right arrow: bottom row, between card 3 and 4 */
+  .flow-arrow--r2 {
+    top: calc(75% - 14px);
+    left: calc(50% - 14px);
+  }
+  .flow-arrow__icon {
+    width: 28px;
+    height: 28px;
+    background: var(--ember);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flow-arrow__icon svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: var(--brand-navy);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 28px;
+  }
+  .about-header h2 { flex: 1; }
+  .about-header__photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--paper-edge);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  /* ---------- MANIFESTO ---------- */
+  .manifesto p {
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--ink);
+    max-width: 28ch;
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+  .manifesto p::first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--ember);
+  }
+  .manifesto .sig {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 40px;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .form {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .form label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .form input, .form textarea {
+    width: 100%;
+    background: var(--paper-deep);
+    border: 1px solid var(--paper-edge);
+    border-radius: 2px;
+    padding: 14px 16px;
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    transition: border-color .15s ease;
+  }
+  .form input:focus, .form textarea:focus {
+    outline: none;
+    border-color: var(--ember);
+  }
+  .form .full { grid-column: 1 / -1; }
+  .form textarea { min-height: 120px; resize: vertical; font-family: var(--sans); }
+  .form__submit { margin-top: 8px; }
+  .form__meta {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width: 960px) {
+    :root { --sidebar: 0; }
+    .sidebar {
       position: relative;
-      overflow: hidden;
-    }
-
-    /* Subtle radial glow behind the wordmark */
-    .page::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -56%);
-      width: 600px;
-      height: 400px;
-      background: radial-gradient(ellipse at center, rgba(76, 139, 245, 0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      text-align: center;
-      max-width: 600px;
       width: 100%;
-    }
-
-    /* ---------- Wordmark ---------- */
-
-    .wordmark {
-      margin-bottom: 28px;
-      line-height: 1;
-    }
-
-    .wordmark svg {
-      display: block;
-      width: clamp(280px, 75vw, 460px);
       height: auto;
-    }
-
-    /* ---------- Descriptor ---------- */
-
-    .descriptor {
-      font-size: clamp(15px, 2.5vw, 17px);
-      font-weight: 400;
-      color: var(--text-2);
-      letter-spacing: -0.2px;
-      line-height: 1.55;
-      margin-bottom: 40px;
-    }
-
-    /* ---------- Divider ---------- */
-
-    .divider {
-      width: 32px;
-      height: 1px;
-      background: var(--border-2);
-      margin-bottom: 40px;
-    }
-
-    /* ---------- Coming soon ---------- */
-
-    .status {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 36px;
-    }
-
-    /* ---------- Contact ---------- */
-
-    .contact a {
-      display: inline-flex;
+      padding: 28px 28px 24px;
+      border-right: none;
+      border-bottom: none;
+      flex-direction: row;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--blue);
-      text-decoration: none;
-      padding: 10px 18px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--blue-dim);
-      transition: border-color 0.18s, background 0.18s, color 0.18s;
+      justify-content: space-between;
+      gap: 20px;
     }
-
-    .contact a:hover {
-      border-color: var(--blue);
-      background: rgba(76, 139, 245, 0.18);
-      color: #7aabf8;
-    }
-
-    .contact a svg {
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    /* ---------- Footer ---------- */
-
-    footer {
-      padding: 20px 24px;
-      text-align: center;
-    }
-
-    footer p {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px;
-      color: var(--text-3);
-      letter-spacing: 0.4px;
-    }
-
-    /* ---------- Mobile ---------- */
-
-    @media (max-width: 480px) {
-      .wordmark {
-        letter-spacing: -1px;
-      }
-
-      .page {
-        padding: 40px 20px;
-      }
-    }
-  </style>
+    .nav, .brand__tag, .brand__loc, .sidebar__email { display: none; }
+    .cta-side { padding: 11px 18px; font-size: 13px; }
+    .cta-side__price { display: none; }
+    main { margin-left: 0; }
+    .container { padding: 0 28px; }
+    section { padding: 72px 0; }
+    .hero { padding-top: 80px; padding-bottom: 80px; }
+    h1 { font-size: 40px; }
+    .container--wide { padding: 0 28px; }
+    .flow-grid { grid-template-columns: 1fr; gap: 20px; }
+    .flow-arrow { display: none; }
+    .form { grid-template-columns: 1fr; }
+    .calc-wrap { padding: 28px 24px; }
+    .calc-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .calc-input { width: 100%; }
+    .lead { font-size: 18px; }
+    .loss-line { font-size: 22px; }
+  }
+</style>
 </head>
 <body>
 
-  <main class="page">
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar">
+  <div>
+    <div class="brand">
+      <img class="brand__mark" src="assets/logos/firerain-white-on-dark.svg" alt="Firerain">
+      <div class="brand__tag">Workflow automation for SME. Built using the latest technology tools and installed by a 30-year operations veteran.</div>
+      <div class="brand__loc">Barossa Valley · South Australia</div>
+    </div>
+
+    <nav class="nav">
+      <ul class="nav__list">
+        <li class="nav__item"><span class="nav__num">01</span><a class="nav__link" href="#loss">Where time gets lost</a></li>
+        <li class="nav__item"><span class="nav__num">02</span><a class="nav__link" href="#calc">What it costs you</a></li>
+        <li class="nav__item"><span class="nav__num">03</span><a class="nav__link" href="#how">How it works</a></li>
+        <li class="nav__item"><span class="nav__num">04</span><a class="nav__link" href="#about">Thirty years</a></li>
+        <li class="nav__item"><span class="nav__num">05</span><a class="nav__link" href="#believe">What I believe</a></li>
+        <li class="nav__item"><span class="nav__num">06</span><a class="nav__link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="sidebar__foot">
+    <a class="cta-side" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>
+      Book a 20-minute call
+      <span class="cta-side__price">NO OBLIGATION · NO COST</span>
+    </a>
+    <div class="sidebar__email">
+      <a href="mailto:info@firerain.ai">info@firerain.ai</a>
+    </div>
+  </div>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
     <div class="container">
-
-      <h1 class="wordmark">
-        <img src="firerain-wordmark-black.png" alt="Firerain" style="max-width:600px; width:100%;">
-      </h1>
-
-      <p class="descriptor">Practical AI and operations consulting<br>for growing businesses.</p>
-
-      <div class="divider"></div>
-
-      <p class="status">Coming soon</p>
-
-      <div class="contact">
-        <a href="mailto:reinier@firerain.ai">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="M2 7l10 7 10-7"/>
-          </svg>
-          reinier@firerain.ai
-        </a>
+      <div class="hero__eyebrow">— Plain English. Working systems. No AI Hype.</div>
+      <h1>Your <em>time</em> is worth more than manual and repetitive work.</h1>
+      <p class="lead">Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.</p>
+      <div class="hero__cta">
+        <a class="btn btn--ember" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>Book a 20-minute call</a>
+        <span class="hero__note">non-binding, no cost, no slide deck</span>
       </div>
 
-    </div>
-  </main>
+      <div class="call-topics">
+        <button class="call-topics__toggle" onclick="this.parentElement.classList.toggle('is-open')" aria-expanded="false">
+          What we'll cover in the call <span class="call-topics__arrow">+</span>
+        </button>
+        <div class="call-topics__list">
+          <ul class="plain">
+            <li>What your business does and how the day-to-day actually runs</li>
+            <li>Where the repetitive, manual work is and who's doing it</li>
+            <li>Your current tech stack and where the quick wins might be</li>
+            <li>Whether there's enough in the pipe to make working together worth it</li>
+            <li>No preparation needed on your end, just bring what's on your mind</li>
+          </ul>
+        </div>
+      </div>
 
-  <footer>
-    <p>firerain.ai</p>
-  </footer>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>Tanunda</span><span>·</span>
+          <span>Nuriootpa</span><span>·</span>
+          <span>Angaston</span><span>·</span>
+          <span>Lyndoch</span><span>·</span>
+          <span>Gawler</span><span>·</span>
+          <span>Salisbury</span><span>·</span>
+          <span>Edinburgh Parks</span><span>·</span>
+          <span>Wingfield</span><span>·</span>
+          <span>Tanunda</span><span>·</span>
+          <span>Nuriootpa</span><span>·</span>
+          <span>Angaston</span><span>·</span>
+          <span>Lyndoch</span><span>·</span>
+          <span>Gawler</span><span>·</span>
+          <span>Salisbury</span><span>·</span>
+          <span>Edinburgh Parks</span><span>·</span>
+          <span>Wingfield</span><span>·</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 WHERE TIME GETS LOST -->
+  <section id="loss">
+    <div class="container">
+      <span class="sec-num">01 — Where time gets lost</span>
+      <h2>There's no shortage of people telling you AI will change everything.</h2>
+      <p class="lead">None of them have spent a day in your business, your factory, your cellar door, or your warehouse.</p>
+      <div class="loss-line">I have.</div>
+
+      <ul class="plain">
+        <li>Manual reports built from three systems every week</li>
+        <li>Orders re-keyed into two places because nothing talks to anything</li>
+        <li>Approvals trapped in someone's inbox for four days</li>
+        <li>The one spreadsheet only Janine understands, and Janine is on leave</li>
+        <li>No clear view of what's safe to automate and what isn't</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 02 ROI CALCULATOR -->
+  <section id="calc">
+    <div class="container">
+      <span class="sec-num">02 — What it costs you</span>
+      <h2>What is manual repetitive work <em>actually</em> costing you?</h2>
+      <p class="lead">Most owners I meet have never put a number on this. It's always more than they think.</p>
+
+      <div class="calc-wrap">
+        <div class="calc-grid">
+          <div class="calc-row">
+            <div class="calc-label">
+              Hours per week spent on this task
+              <small>One specific job that keeps coming back</small>
+            </div>
+            <input class="calc-input" type="number" id="hours" value="3" min="0" step="0.5">
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">
+              Hourly cost of the person doing it
+              <small>Salary, super, and overhead — not just the wage</small>
+            </div>
+            <input class="calc-input" type="number" id="cost" value="45" min="0">
+          </div>
+          <div class="calc-row">
+            <div class="calc-label">
+              Weeks per year this happens
+              <small>48 for most year-round operations</small>
+            </div>
+            <input class="calc-input" type="number" id="weeks" value="48" min="0" max="52">
+          </div>
+        </div>
+
+        <div class="calc-result">
+          <div class="calc-result__row calc-result__row--big">
+            <span class="calc-result__label">Annual cost of this one task</span>
+            <span class="calc-result__value calc-result__value--big" id="annual">AUD 6,480</span>
+          </div>
+          <div class="calc-result__row">
+            <span class="calc-result__label">Over three years</span>
+            <span class="calc-result__value" id="threeYear">AUD 19,440</span>
+          </div>
+          <div class="calc-result__row">
+            <span class="calc-result__label">Hours returned to the team per year</span>
+            <span class="calc-result__value" id="hoursYear">144 hours</span>
+          </div>
+        </div>
+
+        <div class="calc-foot">
+          <div class="calc-foot__note">Most people I see find three to five tasks like this during our first call. That's the point of the call: to see if there's enough in the pipe to make working together worth it.</div>
+          <a class="btn btn--ember" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>Book a 20-minute call</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 HOW IT WORKS -->
+  <section id="how">
+    <div class="container--wide">
+      <span class="sec-num">03 — How it works</span>
+      <h2>Four steps. No surprises.</h2>
+      <p class="lead">Some of this is fixed price, some of it's quoted against a written plan, and some of it's hourly. What you won't see is an "it depends" that turns into a retainer.</p>
+
+      <div class="flow-grid">
+        <div class="flow-arrow flow-arrow--r1">
+          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="5,3 10,7 5,11"/></svg></div>
+        </div>
+        <div class="flow-arrow flow-arrow--down">
+          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="3,5 7,10 11,5"/></svg></div>
+        </div>
+        <div class="flow-arrow flow-arrow--r2">
+          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="5,3 10,7 5,11"/></svg></div>
+        </div>
+
+        <div class="card">
+          <div class="card__num">Step 01</div>
+          <h3>Introductory call</h3>
+          <p>Non-binding. We talk through what you do, where the friction is, and who on your team I'd need to spend time with. We will also discuss your tech stack to find quick wins. If by the end we both think there's something here, we book step two. If not, we part ways with no invoice and no follow-up sales call.</p>
+          <div class="card__price">Free · 20 minutes</div>
+        </div>
+
+        <div class="card">
+          <div class="card__num">Step 02</div>
+          <h3>On-site visit and written plan</h3>
+          <p>I come to you, walk the floor, and sit with the people who actually do the work. Afterwards you get a written plan naming the processes worth automating, how each one would be built, and what I'd need from your end. Fixed fee, one deliverable, no surprises.</p>
+          <div class="card__price">AUD 500 · 2 hours on-site</div>
+        </div>
+
+        <div class="card">
+          <div class="card__num">Step 03</div>
+          <h3>Pilot Automation Build</h3>
+          <p>If the plan makes sense, I quote the first build against it. Scope is fixed before we start, the work runs two weeks, and what you get at the end is installed, tested, and handed over so your team can run it without me.</p>
+          <div class="card__price">Quoted · 2 weeks</div>
+        </div>
+
+        <div class="card">
+          <div class="card__num">Step 04</div>
+          <h3>Build warranty, then a review</h3>
+          <p>For the first three months after go-live, if anything breaks I fix it at no charge. After that we sit down for a review, look at what's working, what needs tuning, and what to build next. Reviews and follow-on work are billed at AUD 150 per hour. No monthly retainer, no lock-in.</p>
+          <div class="card__price">Included, then AUD 150/hour</div>
+        </div>
+      </div>
+
+      <div class="pull">
+        No monthly fee. No surprise invoices. You pay for the visit, the build, and anything you ask me to do after that. Everything in between is on me.
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ABOUT -->
+  <section id="about">
+    <div class="container">
+      <span class="sec-num">04 — Thirty years</span>
+      <div class="about-header">
+        <h2>Thirty years of operations. That's why this works.</h2>
+        <img class="about-header__photo" src="assets/logos/founder-reinier.jpg" alt="Reinier van Vuure">
+      </div>
+      <p>I've spent my career running operations — international FMCG, retail distribution, manufacturing, logistics. I've managed operations, finance, supply chains on four continents and built reporting systems for businesses that had nothing but spreadsheets and a whiteboard.</p>
+      <p>A 25-year-old automation developer can build the same technical solution I can. What they can't do is walk into your business and tell you which spreadsheet is load-bearing and which one is make-work. That triage and being tool/system agnostic and independent is the part nobody else in this market is offering.</p>
+      <p>I started Firerain because I kept meeting people who knew AI could help but couldn't find someone who understood their operation well enough to actually deliver it.</p>
+    </div>
+  </section>
+
+  <!-- 05 MANIFESTO -->
+  <section id="believe">
+    <div class="container">
+      <span class="sec-num">05 — What I believe</span>
+      <h2>A few things I'm sure of.</h2>
+
+      <div class="manifesto">
+        <p>Most AI consulting is slide decks and strategy. I build things that run on Monday morning and are still running in six months.</p>
+        <p>The people who sell automation don't understand operations. The people who understand operations don't build automation. I do both, and that's the whole job.</p>
+        <p>Your team's time is the point. Everything else — the AI, the dashboards, the integrations — is just a way of getting it back.</p>
+
+        <div class="sig">— Reinier, Barossa Valley</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <span class="sec-num">06 — Contact</span>
+      <h2>Let's look at <em>one</em> workflow that's costing you time every week.</h2>
+      <p class="lead">Tell me a bit about what's on your mind. I'll come back within a day.</p>
+
+      <form class="form" onsubmit="event.preventDefault(); alert('Prototype — form not wired yet.');">
+        <div>
+          <label for="n">Your name</label>
+          <input id="n" type="text" placeholder="Joe Bloggs">
+        </div>
+        <div>
+          <label for="b">Business</label>
+          <input id="b" type="text" placeholder="The World's Best Company">
+        </div>
+        <div class="full">
+          <label for="e">Email</label>
+          <input id="e" type="email" placeholder="joe@worldsbestcompany.com.au">
+        </div>
+        <div class="full">
+          <label for="m">What's on your mind?</label>
+          <textarea id="m" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit."></textarea>
+        </div>
+        <div class="full">
+          <button class="btn btn--ember form__submit" type="submit">Send it over</button>
+        </div>
+        <div class="form__meta">
+          <span>info@firerain.ai</span>
+          <span>Barossa Valley · South Australia</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ---------- ROI calculator ----------
+  const fmt = n => 'AUD ' + Math.round(n).toLocaleString('en-AU');
+  const $hours = document.getElementById('hours');
+  const $cost  = document.getElementById('cost');
+  const $weeks = document.getElementById('weeks');
+  const $annual = document.getElementById('annual');
+  const $threeYear = document.getElementById('threeYear');
+  const $hoursYear = document.getElementById('hoursYear');
+
+  function calc() {
+    const h = parseFloat($hours.value) || 0;
+    const c = parseFloat($cost.value)  || 0;
+    const w = parseFloat($weeks.value) || 0;
+    const annual = h * c * w;
+    $annual.textContent = fmt(annual);
+    $threeYear.textContent = fmt(annual * 3);
+    $hoursYear.textContent = Math.round(h * w).toLocaleString('en-AU') + ' hours';
+  }
+  [$hours, $cost, $weeks].forEach(el => el.addEventListener('input', calc));
+  calc();
+
+  // ---------- Active nav on scroll ----------
+  const sections = [...document.querySelectorAll('main section[id]')];
+  const links = [...document.querySelectorAll('.nav__item')];
+  const byId = id => links.find(l => l.querySelector('a').getAttribute('href') === '#' + id);
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('is-active'));
+        const active = byId(e.target.id);
+        if (active) active.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => io.observe(s));
+</script>
+
+<!-- Cal.com popup modal embed -->
+<script type="text/javascript">
+(function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", {origin:"https://cal.com"});
+Cal("ui", {
+  "styles": {"branding": {"brandColor": "#ff751f"}},
+  "hideEventTypeDetails": false,
+  "layout": "month_view"
+});
+</script>
 
 </body>
 </html>

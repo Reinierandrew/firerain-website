@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&amp;display=swap');</style>
+  <rect width="120" height="120" fill="#ffffff"/>
+  <polygon points="112,60 86,105 34,105 8,60 34,15 86,15" fill="none" stroke="#ff751f" stroke-width="3"/>
+  <g transform="translate(60,62)">
+    <text x="-22" y="0" font-family="'DM Sans', sans-serif" font-weight="400" font-size="74" fill="#00167a" text-anchor="middle" dominant-baseline="central">f</text>
+    <text x="24" y="0" font-family="'DM Sans', sans-serif" font-weight="400" font-size="74" fill="#ff751f" text-anchor="middle" dominant-baseline="central">r</text>
+  </g>
+</svg>
