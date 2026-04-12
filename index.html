@@ -955,22 +955,26 @@
       <h2>Let's look at <em>one</em> workflow that's costing you time every week.</h2>
       <p class="lead">Tell me a bit about what's on your mind. I'll come back within a day.</p>
 
-      <form class="form" onsubmit="event.preventDefault(); alert('Prototype — form not wired yet.');">
+      <form class="form" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="0543b989-ec46-4273-91f6-478aa0e04858">
+        <input type="hidden" name="subject" value="New enquiry from firerain.ai">
+        <input type="hidden" name="from_name" value="Firerain Website">
+        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
         <div>
           <label for="n">Your name</label>
-          <input id="n" type="text" placeholder="Joe Bloggs">
+          <input id="n" name="name" type="text" placeholder="Joe Bloggs" required>
         </div>
         <div>
           <label for="b">Business</label>
-          <input id="b" type="text" placeholder="The World's Best Company">
+          <input id="b" name="business" type="text" placeholder="The World's Best Company">
         </div>
         <div class="full">
           <label for="e">Email</label>
-          <input id="e" type="email" placeholder="joe@worldsbestcompany.com.au">
+          <input id="e" name="email" type="email" placeholder="joe@worldsbestcompany.com.au" required>
         </div>
         <div class="full">
           <label for="m">What's on your mind?</label>
-          <textarea id="m" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit."></textarea>
+          <textarea id="m" name="message" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit." required></textarea>
         </div>
         <div class="full">
           <button class="btn btn--ember form__submit" type="submit">Send it over</button>
