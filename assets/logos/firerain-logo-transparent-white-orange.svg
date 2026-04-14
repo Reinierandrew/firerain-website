@@ -1,0 +1,31 @@
+<svg viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title-logo-white-orange">
+  <title id="title-logo-white-orange">Firerain logo, white fire and orange rain</title>
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400&amp;display=swap');</style>
+    <linearGradient id="firerainSlashWhiteOrange" x1="166" y1="-4" x2="166" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ff751f"/>
+    </linearGradient>
+  </defs>
+  <text x="18" y="94"
+        font-family="'DM Sans', sans-serif"
+        font-weight="400"
+        font-size="86"
+        text-rendering="geometricPrecision"
+        font-variant-ligatures="none"
+        style="font-feature-settings:'liga' 0, 'clig' 0;"
+        fill="#ffffff">fire</text>
+  <line x1="150" y1="116" x2="186" y2="-4"
+        stroke="url(#firerainSlashWhiteOrange)"
+        stroke-width="3"
+        stroke-linecap="round"
+        vector-effect="non-scaling-stroke"/>
+  <text x="188" y="94"
+        font-family="'DM Sans', sans-serif"
+        font-weight="400"
+        font-size="86"
+        text-rendering="geometricPrecision"
+        font-variant-ligatures="none"
+        style="font-feature-settings:'liga' 0, 'clig' 0;"
+        fill="#ff751f">rain</text>
+</svg>

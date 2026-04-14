@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="title-icon-navy-orange">
+  <title id="title-icon-navy-orange">Firerain icon, navy f and orange r</title>
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500&amp;display=swap');</style>
+  </defs>
+  <polygon points="112,60 86,105 34,105 8,60 34,15 86,15"
+           fill="none"
+           stroke="#ff751f"
+           stroke-width="3.5"
+           stroke-linejoin="round"
+           vector-effect="non-scaling-stroke"/>
+  <g transform="translate(60,62)">
+    <text x="-16" y="0"
+          font-family="'DM Sans', sans-serif"
+          font-weight="400"
+          font-size="82"
+          text-anchor="middle"
+          dominant-baseline="central"
+          text-rendering="geometricPrecision"
+          font-variant-ligatures="none"
+          style="font-feature-settings:'liga' 0, 'clig' 0;"
+          fill="#00167a">f</text>
+    <text x="16" y="0"
+          font-family="'DM Sans', sans-serif"
+          font-weight="400"
+          font-size="82"
+          text-anchor="middle"
+          dominant-baseline="central"
+          text-rendering="geometricPrecision"
+          font-variant-ligatures="none"
+          style="font-feature-settings:'liga' 0, 'clig' 0;"
+          fill="#ff751f">r</text>
+  </g>
+</svg>

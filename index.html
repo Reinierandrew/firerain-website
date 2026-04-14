@@ -1,710 +1,22 @@
 <!doctype html>
-<html lang="en-AU">
+<html lang="en-AU" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Firerain — Workflow automation for small businesses</title>
 <meta name="description" content="Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.">
-<link rel="icon" type="image/svg+xml" href="assets/logos/fr-icon-navy.svg">
+<link rel="icon" type="image/svg+xml" href="assets/logos/firerain-icon-transparent-white-orange.svg" id="favicon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper:        #F5EFE4;
-    --paper-deep:   #EDE4D3;
-    --paper-edge:   #D9CDB5;
-    --ink:          #1A1714;
-    --ink-soft:     #5C524A;
-    --ink-mute:     #7A6B5C;
-    --ember:        #ff751f;
-    --ember-deep:   #e0621a;
-    --brand-orange: #ff751f;
-    --brand-navy:   #00167a;
-    --olive:        #4A5438;
-    --rule:         #D9CDB5;
-
-    --display: "Fraunces", "Iowan Old Style", Georgia, serif;
-    --sans:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
-
-    --sidebar: 320px;
-    --content-max: 680px;
-  }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: var(--sans);
-    font-size: 17px;
-    line-height: 1.65;
-    color: var(--ink);
-    background: var(--paper);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  ::selection { background: var(--ember); color: var(--paper); }
-
-  a { color: var(--ember); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s ease; }
-  a:hover { border-bottom-color: var(--ember); }
-
-  /* ---------- SIDEBAR ---------- */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--sidebar);
-    height: 100vh;
-    background: var(--brand-navy);
-    border-right: none;
-    padding: 42px 36px 36px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    z-index: 10;
-  }
-
-  .brand { }
-  .brand__mark {
-    display: block;
-    width: 100%;
-    max-width: 220px;
-    height: auto;
-  }
-  .brand__tag {
-    margin-top: 14px;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #B0B8C8;
-    max-width: 220px;
-  }
-  .brand__loc {
-    margin-top: 18px;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ember);
-  }
-
-  .nav { margin-top: 46px; }
-  .nav__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .nav__item {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding: 8px 0;
-    border-bottom: 1px dashed transparent;
-  }
-  .nav__num {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: #A0AABE;
-    letter-spacing: 0.05em;
-    min-width: 22px;
-  }
-  .nav__link {
-    font-family: var(--sans);
-    font-size: 14px;
-    color: #D0D6E0;
-    border-bottom: none;
-    transition: color .15s ease;
-  }
-  .nav__link:hover { color: var(--ember); border-bottom: none; }
-  .nav__item.is-active .nav__num { color: var(--ember); }
-  .nav__item.is-active .nav__link { color: #FFFFFF; }
-
-  .sidebar__foot { }
-  .cta-side {
-    display: block;
-    background: var(--ember);
-    color: var(--brand-navy);
-    padding: 14px 18px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    border: none;
-    transition: background .15s ease, transform .15s ease;
-  }
-  .cta-side:hover {
-    background: var(--ember-deep);
-    color: var(--brand-navy);
-    transform: translateY(-1px);
-    border-bottom: none;
-  }
-  .cta-side__price {
-    display: block;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.06em;
-    margin-top: 2px;
-    opacity: 0.85;
-  }
-  .sidebar__email {
-    margin-top: 18px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: #A0AABE;
-    word-break: break-all;
-  }
-  .sidebar__email a { color: #A0AABE; }
-  .sidebar__email a:hover { color: var(--ember); }
-
-  /* ---------- MAIN ---------- */
-  main {
-    margin-left: var(--sidebar);
-    padding: 0;
-  }
-
-  .container {
-    max-width: var(--content-max);
-    margin: 0 auto;
-    padding: 0 48px;
-  }
-
-  section {
-    padding: 110px 0;
-    border-bottom: 1px solid var(--rule);
-  }
-  section:last-child { border-bottom: none; }
-
-  .sec-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    display: block;
-  }
-
-  h1, h2, h3 {
-    font-family: var(--display);
-    font-weight: 500;
-    color: var(--ink);
-    letter-spacing: -0.015em;
-    margin: 0 0 24px;
-  }
-
-  h1 {
-    font-size: clamp(40px, 5.4vw, 68px);
-    line-height: 1.03;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-    margin-bottom: 36px;
-  }
-  h1 em {
-    font-style: italic;
-    font-weight: 500;
-    color: var(--ember);
-  }
-
-  h2 {
-    font-size: clamp(28px, 3vw, 40px);
-    line-height: 1.1;
-  }
-  h2 em { font-style: italic; color: var(--ember); font-weight: 500; }
-
-  h3 {
-    font-size: 20px;
-    line-height: 1.25;
-    margin-bottom: 10px;
-  }
-
-  p {
-    margin: 0 0 20px;
-    max-width: 60ch;
-  }
-
-  .lead {
-    font-size: 20px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    max-width: 56ch;
-    margin-bottom: 40px;
-  }
-  .lead em {
-    font-family: var(--display);
-    font-style: italic;
-    color: var(--ink);
-  }
-
-  /* ---------- HERO ---------- */
-  .hero {
-    padding-top: 140px;
-    padding-bottom: 120px;
-  }
-  .hero__eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ember);
-    margin-bottom: 28px;
-  }
-  .hero__cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
-    margin-top: 8px;
-  }
-
-  .btn {
-    display: inline-block;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 16px 26px;
-    border-radius: 999px;
-    font-size: 15px;
-    font-weight: 500;
-    border: none;
-    transition: background .15s ease, transform .15s ease;
-  }
-  .btn:hover {
-    background: var(--ember);
-    color: var(--paper);
-    transform: translateY(-1px);
-    border-bottom: none;
-  }
-  .btn--ember { background: var(--ember); color: var(--brand-navy); }
-  .btn--ember:hover { background: var(--ember-deep); color: var(--brand-navy); }
-
-  .hero__note {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.04em;
-  }
-
-  .ticker {
-    margin-top: 80px;
-    padding: 18px 0;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    overflow: hidden;
-    white-space: nowrap;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-  .ticker__track {
-    display: inline-block;
-    animation: scroll 40s linear infinite;
-  }
-  .ticker__track span { margin-right: 42px; }
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  /* ---------- CALL TOPICS EXPAND ---------- */
-  .call-topics {
-    margin-top: 32px;
-    max-width: 54ch;
-  }
-  .call-topics__toggle {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    color: var(--ember);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: color .15s ease;
-  }
-  .call-topics__toggle:hover { color: var(--ember-deep); }
-  .call-topics__arrow {
-    font-size: 16px;
-    font-weight: 500;
-    transition: transform .25s ease;
-    display: inline-block;
-  }
-  .call-topics.is-open .call-topics__arrow { transform: rotate(45deg); }
-  .call-topics__list {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height .35s ease, margin .35s ease;
-    margin-top: 0;
-  }
-  .call-topics.is-open .call-topics__list {
-    max-height: 400px;
-    margin-top: 16px;
-  }
-
-  /* ---------- WHERE TIME GETS LOST ---------- */
-  .loss-line {
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 28px;
-    line-height: 1.25;
-    color: var(--ember);
-    margin: 32px 0 40px;
-  }
-  ul.plain {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    border-top: 1px solid var(--rule);
-  }
-  ul.plain li {
-    padding: 18px 0 18px 28px;
-    border-bottom: 1px solid var(--rule);
-    position: relative;
-    font-size: 17px;
-  }
-  ul.plain li::before {
-    content: "—";
-    position: absolute;
-    left: 0;
-    color: var(--ember);
-    font-family: var(--mono);
-  }
-
-  /* ---------- ROI CALCULATOR ---------- */
-  .calc-wrap {
-    background: var(--paper-deep);
-    border: 1px solid var(--paper-edge);
-    border-radius: 4px;
-    padding: 40px 44px;
-    margin-top: 32px;
-  }
-  .calc-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 22px;
-    margin-bottom: 32px;
-  }
-  .calc-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding-bottom: 18px;
-    border-bottom: 1px dashed var(--paper-edge);
-  }
-  .calc-row:last-child { border-bottom: none; padding-bottom: 0; }
-  .calc-label {
-    font-size: 15px;
-    color: var(--ink);
-    flex: 1;
-  }
-  .calc-label small {
-    display: block;
-    color: var(--ink-mute);
-    font-size: 12px;
-    margin-top: 2px;
-  }
-  .calc-input {
-    font-family: var(--mono);
-    font-size: 18px;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--paper-edge);
-    border-radius: 2px;
-    padding: 10px 14px;
-    width: 110px;
-    text-align: right;
-    transition: border-color .15s ease;
-  }
-  .calc-input:focus {
-    outline: none;
-    border-color: var(--ember);
-  }
-
-  .calc-result {
-    border-top: 2px solid var(--ink);
-    padding-top: 28px;
-    margin-top: 8px;
-  }
-  .calc-result__row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 10px 0;
-  }
-  .calc-result__row--big {
-    padding: 18px 0;
-    border-bottom: 1px solid var(--paper-edge);
-    margin-bottom: 6px;
-  }
-  .calc-result__label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-  }
-  .calc-result__value {
-    font-family: var(--display);
-    font-size: 22px;
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .calc-result__value--big {
-    font-size: 38px;
-    color: var(--ember);
-  }
-  .calc-foot {
-    margin-top: 28px;
-    padding-top: 24px;
-    border-top: 1px dashed var(--paper-edge);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
-  .calc-foot__note {
-    font-size: 13px;
-    color: var(--ink-soft);
-    font-style: italic;
-    font-family: var(--display);
-    max-width: 32ch;
-  }
-
-  .pull {
-    margin: 40px 0 0;
-    padding: 28px 32px;
-    background: var(--paper-deep);
-    border-left: 3px solid var(--ember);
-    font-family: var(--display);
-    font-style: italic;
-    font-size: 18px;
-    line-height: 1.5;
-    color: var(--ink);
-  }
-
-  /* ---------- FLOW CARDS ---------- */
-  .container--wide {
-    max-width: 920px;
-    margin: 0 auto;
-    padding: 0 48px;
-  }
-  .flow-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px 40px;
-    margin-top: 36px;
-    position: relative;
-  }
-  .card {
-    background: var(--paper-deep);
-    border: 1px solid var(--paper-edge);
-    border-radius: 4px;
-    padding: 30px 28px;
-    display: flex;
-    flex-direction: column;
-    min-height: 220px;
-    transition: transform .15s ease, border-color .15s ease;
-    position: relative;
-  }
-  .card:hover {
-    transform: translateY(-2px);
-    border-color: var(--ember);
-  }
-  .card__num {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--ink-mute);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-  .card h3 {
-    font-family: var(--display);
-    font-size: 22px;
-    font-weight: 500;
-    margin: 0 0 12px;
-  }
-  .card p {
-    font-size: 14px;
-    line-height: 1.55;
-    color: var(--ink-soft);
-    margin: 0 0 auto;
-  }
-  .card__price {
-    margin-top: 24px;
-    padding-top: 16px;
-    border-top: 1px dashed var(--paper-edge);
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ember);
-    letter-spacing: 0.02em;
-  }
-
-  .flow-arrow {
-    position: absolute;
-    z-index: 2;
-  }
-  /* Right arrow: top row, between card 1 and 2 */
-  .flow-arrow--r1 {
-    top: calc(25% - 14px);
-    left: calc(50% - 14px);
-  }
-  /* Down arrow: centre, between rows */
-  .flow-arrow--down {
-    top: calc(50% - 14px);
-    left: calc(50% - 14px);
-  }
-  /* Right arrow: bottom row, between card 3 and 4 */
-  .flow-arrow--r2 {
-    top: calc(75% - 14px);
-    left: calc(50% - 14px);
-  }
-  .flow-arrow__icon {
-    width: 28px;
-    height: 28px;
-    background: var(--ember);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .flow-arrow__icon svg {
-    width: 14px;
-    height: 14px;
-    fill: none;
-    stroke: var(--brand-navy);
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  /* ---------- ABOUT ---------- */
-  .about-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 28px;
-  }
-  .about-header h2 { flex: 1; }
-  .about-header__photo {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--paper-edge);
-    flex-shrink: 0;
-    margin-top: 4px;
-  }
-
-  /* ---------- MANIFESTO ---------- */
-  .manifesto p {
-    font-family: var(--display);
-    font-size: 22px;
-    line-height: 1.45;
-    color: var(--ink);
-    max-width: 28ch;
-    margin-bottom: 28px;
-    font-weight: 400;
-  }
-  .manifesto p::first-letter {
-    font-size: 1.4em;
-    font-weight: 600;
-    color: var(--ember);
-  }
-  .manifesto .sig {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-top: 40px;
-  }
-
-  /* ---------- CONTACT ---------- */
-  .form {
-    margin-top: 32px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-  }
-  .form label {
-    display: block;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-mute);
-    margin-bottom: 8px;
-  }
-  .form input, .form textarea {
-    width: 100%;
-    background: var(--paper-deep);
-    border: 1px solid var(--paper-edge);
-    border-radius: 2px;
-    padding: 14px 16px;
-    font-family: var(--sans);
-    font-size: 15px;
-    color: var(--ink);
-    transition: border-color .15s ease;
-  }
-  .form input:focus, .form textarea:focus {
-    outline: none;
-    border-color: var(--ember);
-  }
-  .form .full { grid-column: 1 / -1; }
-  .form textarea { min-height: 120px; resize: vertical; font-family: var(--sans); }
-  .form__submit { margin-top: 8px; }
-  .form__meta {
-    grid-column: 1 / -1;
-    margin-top: 8px;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-mute);
-    letter-spacing: 0.04em;
-    display: flex;
-    justify-content: space-between;
-    padding-top: 24px;
-    border-top: 1px solid var(--rule);
-  }
-
-  /* ---------- MOBILE ---------- */
-  @media (max-width: 960px) {
-    :root { --sidebar: 0; }
-    .sidebar {
-      position: relative;
-      width: 100%;
-      height: auto;
-      padding: 28px 28px 24px;
-      border-right: none;
-      border-bottom: none;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-    }
-    .nav, .brand__tag, .brand__loc, .sidebar__email { display: none; }
-    .cta-side { padding: 11px 18px; font-size: 13px; }
-    .cta-side__price { display: none; }
-    main { margin-left: 0; }
-    .container { padding: 0 28px; }
-    section { padding: 72px 0; }
-    .hero { padding-top: 80px; padding-bottom: 80px; }
-    h1 { font-size: 40px; }
-    .container--wide { padding: 0 28px; }
-    .flow-grid { grid-template-columns: 1fr; gap: 20px; }
-    .flow-arrow { display: none; }
-    .form { grid-template-columns: 1fr; }
-    .calc-wrap { padding: 28px 24px; }
-    .calc-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .calc-input { width: 100%; }
-    .lead { font-size: 18px; }
-    .loss-line { font-size: 22px; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
+<!-- Apply saved theme before paint to avoid flash -->
+<script>
+  (function() {
+    var saved = localStorage.getItem('fr-theme');
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+  })();
+</script>
 </head>
 <body>
 
@@ -712,9 +24,8 @@
 <aside class="sidebar">
   <div>
     <div class="brand">
-      <img class="brand__mark" src="assets/logos/firerain-white-on-dark.svg" alt="Firerain">
-      <div class="brand__tag">Workflow automation for SME. Built using the latest technology tools and installed by a 30-year operations veteran.</div>
-      <div class="brand__loc">Barossa Valley · South Australia</div>
+      <img class="brand__mark" src="assets/logos/firerain-logo-transparent-white-orange.svg" alt="Firerain">
+      <div class="brand__tag">Workflow automation for SME. Installed by a 30-year operations veteran.</div>
     </div>
 
     <nav class="nav">
@@ -730,6 +41,10 @@
   </div>
 
   <div class="sidebar__foot">
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <span class="theme-toggle__icon"></span>
+      <span class="theme-toggle__label"></span>
+    </button>
     <a class="cta-side" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>
       Book a 20-minute call
       <span class="cta-side__price">NO OBLIGATION · NO COST</span>
@@ -746,66 +61,151 @@
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="container">
-      <div class="hero__eyebrow">— Plain English. Working systems. No AI Hype.</div>
-      <h1>Your <em>time</em> is worth more than manual and repetitive work.</h1>
-      <p class="lead">Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.</p>
-      <div class="hero__cta">
-        <a class="btn btn--ember" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>Book a 20-minute call</a>
-        <span class="hero__note">non-binding, no cost, no slide deck</span>
-      </div>
+      <div class="hero__content">
+        <div class="hero__eyebrow">Plain English. Workflow first. Technology second. No AI hype.</div>
+        <h1>Your <em>time</em> is worth more than manual and repetitive work.</h1>
+        <p class="lead">Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.</p>
+        <div class="hero__focus">
+          <p class="hero__focus-main">We start by finding one workflow worth improving.</p>
+          <p class="hero__focus-sub">From there, the work might be automation, hands-on AI training with your team, or a practical review of where AI tools could save time in the day-to-day work.</p>
+        </div>
 
-      <div class="call-topics">
-        <button class="call-topics__toggle" onclick="this.parentElement.classList.toggle('is-open')" aria-expanded="false">
-          What we'll cover in the call <span class="call-topics__arrow">+</span>
-        </button>
-        <div class="call-topics__list">
-          <ul class="plain">
-            <li>What your business does and how the day-to-day actually runs</li>
-            <li>Where the repetitive, manual work is and who's doing it</li>
-            <li>Your current tech stack and where the quick wins might be</li>
-            <li>Whether there's enough in the pipe to make working together worth it</li>
-            <li>No preparation needed on your end, just bring what's on your mind</li>
-          </ul>
+        <div class="call-topics">
+          <button class="call-topics__toggle" onclick="this.parentElement.classList.toggle('is-open')" aria-expanded="false">
+            What we'll cover in the call <span class="call-topics__arrow">+</span>
+          </button>
+          <div class="call-topics__list">
+            <ul class="plain">
+              <li>One workflow or recurring task that looks worth improving</li>
+              <li>Whether it needs automation, AI support, training, or a simpler process change</li>
+              <li>Where tools like Claude or OpenAI might help in the day-to-day work</li>
+              <li>Security, access, and data boundaries - who can see what, what should stay inside the business, and where the real risks are</li>
+              <li>Who on your team should be involved if we go further</li>
+              <li>Whether the next step is a build, an on-site review, or practical training</li>
+            </ul>
+          </div>
         </div>
       </div>
+      <div class="hero-diagram" aria-hidden="true">
+        <svg class="hero-diagram__svg" viewBox="0 0 760 900" aria-hidden="true">
+          <path id="hero-flow-path-top-link" class="flow-line flow-line-main" d="M412 122 L412 208"/>
+          <path id="hero-flow-path-left-branch" class="flow-line flow-line-orange" d="M388 232 H260 V528"/>
+          <path id="hero-flow-path-right-branch-a" class="flow-line flow-line-blue" d="M436 232 H548 V282"/>
+          <path id="hero-flow-path-right-branch-b" class="flow-line flow-line-blue" d="M548 318 V512 H430"/>
+          <path id="hero-flow-path-lower-link" class="flow-line flow-line-green" d="M412 542 L412 686"/>
+          <path id="hero-flow-path-left-merge" class="flow-line flow-line-orange" d="M260 568 L260 708 L390 708"/>
+          <path id="hero-flow-path-bottom-link" class="flow-line flow-line-green" d="M412 730 L412 810"/>
 
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker__track">
-          <span>Tanunda</span><span>·</span>
-          <span>Nuriootpa</span><span>·</span>
-          <span>Angaston</span><span>·</span>
-          <span>Lyndoch</span><span>·</span>
-          <span>Gawler</span><span>·</span>
-          <span>Salisbury</span><span>·</span>
-          <span>Edinburgh Parks</span><span>·</span>
-          <span>Wingfield</span><span>·</span>
-          <span>Tanunda</span><span>·</span>
-          <span>Nuriootpa</span><span>·</span>
-          <span>Angaston</span><span>·</span>
-          <span>Lyndoch</span><span>·</span>
-          <span>Gawler</span><span>·</span>
-          <span>Salisbury</span><span>·</span>
-          <span>Edinburgh Parks</span><span>·</span>
-          <span>Wingfield</span><span>·</span>
-        </div>
+          <g id="hero-flow-node-top" class="flow-node" transform="translate(412 96)">
+            <path d="M-18 -20 H6 L18 -8 V20 H-18 Z" class="flow-symbol flow-symbol--orange"/>
+            <path d="M6 -20 V-8 H18" class="flow-symbol flow-symbol--orange" fill="none"/>
+            <path d="M-8 -4 H8 M-8 8 H4" class="flow-symbol flow-symbol--orange" fill="none"/>
+          </g>
+
+          <g id="hero-flow-node-decision" class="flow-node" transform="translate(412 232)">
+            <path d="M0 -24 L24 0 L0 24 L-24 0 Z" class="flow-symbol flow-symbol--blue"/>
+          </g>
+
+          <g id="hero-flow-node-envelope" class="flow-node" transform="translate(548 300)">
+            <rect x="-25" y="-18" width="50" height="36" rx="8" class="flow-symbol flow-symbol--blue"/>
+            <path d="M-25 -18 L0 2 L25 -18" class="flow-symbol flow-symbol--blue" fill="none"/>
+          </g>
+
+          <g id="hero-flow-node-process" class="flow-node" transform="translate(260 548)">
+            <rect x="-28" y="-20" width="56" height="40" rx="8" class="flow-symbol flow-symbol--orange"/>
+            <path d="M-22 10 H22" class="flow-symbol flow-symbol--orange" fill="none"/>
+          </g>
+
+          <g id="hero-flow-node-merge" class="flow-node" transform="translate(412 512)">
+            <path d="M0 -22 L18 -6 L18 14 L0 30 L-18 14 L-18 -6 Z" class="flow-symbol flow-symbol--green"/>
+          </g>
+
+          <g id="hero-flow-node-lower" class="flow-node" transform="translate(412 708)">
+            <rect x="-22" y="-22" width="44" height="44" rx="14" class="flow-symbol flow-symbol--green"/>
+          </g>
+
+          <g id="hero-flow-node-final" class="flow-node" transform="translate(412 826)">
+            <rect x="-34" y="-16" width="68" height="32" rx="16" class="flow-symbol flow-symbol--green"/>
+          </g>
+
+          <circle id="hero-flow-dot-orange" r="5.6" class="flow-signal flow-signal--orange"/>
+          <circle id="hero-flow-dot-blue" r="5" class="flow-signal flow-signal--blue"/>
+          <circle id="hero-flow-dot-green" r="5.2" class="flow-signal flow-signal--green"/>
+        </svg>
       </div>
     </div>
+    <!--
+    <div class="hero-workflow" aria-hidden="true">
+      <div class="hero-workflow__track">
+        <div class="hero-pill hero-pill--signal"><span class="hero-pill__icon">PDF</span><span>Invoice lands in the inbox</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill"><span class="hero-pill__icon">AI</span><span>Key fields pulled out cleanly</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">OK</span><span>Checks run before anyone touches it</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">PO</span><span>Approval request goes to the right person</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--signal"><span class="hero-pill__icon">2M</span><span>Approved in minutes, not four days</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">RPT</span><span>Weekly numbers pulled from live systems</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">AUD</span><span>Report ready before Friday disappears</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">XRO</span><span>Xero updated without re-keying</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">ETA</span><span>Status sent to the team automatically</span></div>
+
+        <div class="hero-pill hero-pill--signal"><span class="hero-pill__icon">PDF</span><span>Invoice lands in the inbox</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill"><span class="hero-pill__icon">AI</span><span>Key fields pulled out cleanly</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">OK</span><span>Checks run before anyone touches it</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">PO</span><span>Approval request goes to the right person</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--signal"><span class="hero-pill__icon">2M</span><span>Approved in minutes, not four days</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">RPT</span><span>Weekly numbers pulled from live systems</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">AUD</span><span>Report ready before Friday disappears</span></div>
+        <span class="hero-workflow__dot">·</span>
+        <div class="hero-pill"><span class="hero-pill__icon">XRO</span><span>Xero updated without re-keying</span></div>
+        <span class="hero-workflow__arrow">→</span>
+        <div class="hero-pill hero-pill--done"><span class="hero-pill__icon">ETA</span><span>Status sent to the team automatically</span></div>
+      </div>
+    </div>
+    -->
   </section>
 
   <!-- 01 WHERE TIME GETS LOST -->
   <section id="loss">
     <div class="container">
-      <span class="sec-num">01 — Where time gets lost</span>
-      <h2>There's no shortage of people telling you AI will change everything.</h2>
-      <p class="lead">None of them have spent a day in your business, your factory, your cellar door, or your warehouse.</p>
-      <div class="loss-line">I have.</div>
+      <div class="section-copy">
+        <h2>There's no shortage of people telling you AI will change everything.</h2>
+        <p class="lead">I've spent 30 years inside real operations — factories, warehouses, cellar doors, retail, and supply chains.</p>
+      </div>
 
-      <ul class="plain">
-        <li>Manual reports built from three systems every week</li>
-        <li>Orders re-keyed into two places because nothing talks to anything</li>
-        <li>Approvals trapped in someone's inbox for four days</li>
-        <li>The one spreadsheet only Janine understands, and Janine is on leave</li>
-        <li>No clear view of what's safe to automate and what isn't</li>
+      <ul class="loss-list">
+        <li>
+          <span class="loss-list__label">Reporting</span>
+          <span class="loss-list__text">Manual reports stitched together from three systems every week.</span>
+        </li>
+        <li>
+          <span class="loss-list__label">Re-keying</span>
+          <span class="loss-list__text">Orders entered twice because the systems still do not talk to each other.</span>
+        </li>
+        <li>
+          <span class="loss-list__label">Approvals</span>
+          <span class="loss-list__text">Jobs stalled in someone’s inbox for four days while the rest of the workflow waits.</span>
+        </li>
+        <li>
+          <span class="loss-list__label">Spreadsheet Lore</span>
+          <span class="loss-list__text">One critical spreadsheet only Janine understands, and Janine is on leave.</span>
+        </li>
+        <li>
+          <span class="loss-list__label">Automation Risk</span>
+          <span class="loss-list__text">No clear line between what is safe to automate, what needs oversight, and what should stay manual.</span>
+        </li>
       </ul>
     </div>
   </section>
@@ -813,132 +213,258 @@
   <!-- 02 ROI CALCULATOR -->
   <section id="calc">
     <div class="container">
-      <span class="sec-num">02 — What it costs you</span>
-      <h2>What is manual repetitive work <em>actually</em> costing you?</h2>
-      <p class="lead">Most owners I meet have never put a number on this. It's always more than they think.</p>
+      <div class="section-copy">
+        <h2>What is manual repetitive work <em>actually</em> costing you?</h2>
+        <p class="lead">Most operators I meet have never put a number on this. It's always more than they think.</p>
+      </div>
 
-      <div class="calc-wrap">
-        <div class="calc-grid">
-          <div class="calc-row">
-            <div class="calc-label">
-              Hours per week spent on this task
-              <small>One specific job that keeps coming back</small>
+      <div class="section-block">
+        <div class="calc-wrap">
+          <div class="calc-grid">
+            <div class="calc-row">
+              <div class="calc-label">
+                Hours per week spent on this task
+                <small>One specific job that keeps coming back</small>
+              </div>
+              <input class="calc-input" type="number" id="hours" value="3" min="0" step="0.5">
             </div>
-            <input class="calc-input" type="number" id="hours" value="3" min="0" step="0.5">
+            <div class="calc-row">
+              <div class="calc-label">
+                Hourly cost of the person doing it
+                <small>Salary, super, and overhead — not just the wage</small>
+              </div>
+              <input class="calc-input" type="number" id="cost" value="45" min="0">
+            </div>
+            <div class="calc-row">
+              <div class="calc-label">
+                Weeks per year this happens
+                <small>48 for most year-round operations</small>
+              </div>
+              <input class="calc-input" type="number" id="weeks" value="48" min="0" max="52">
+            </div>
           </div>
-          <div class="calc-row">
-            <div class="calc-label">
-              Hourly cost of the person doing it
-              <small>Salary, super, and overhead — not just the wage</small>
+
+          <div class="calc-result">
+            <div class="calc-result__row calc-result__row--big">
+              <span class="calc-result__label">Annual cost of this one task</span>
+              <span class="calc-result__value calc-result__value--big" id="annual">AUD 6,480</span>
             </div>
-            <input class="calc-input" type="number" id="cost" value="45" min="0">
-          </div>
-          <div class="calc-row">
-            <div class="calc-label">
-              Weeks per year this happens
-              <small>48 for most year-round operations</small>
+            <div class="calc-result__row">
+              <span class="calc-result__label">Over three years</span>
+              <span class="calc-result__value" id="threeYear">AUD 19,440</span>
             </div>
-            <input class="calc-input" type="number" id="weeks" value="48" min="0" max="52">
+            <div class="calc-result__row">
+              <span class="calc-result__label">Hours returned to the team per year</span>
+              <span class="calc-result__value" id="hoursYear">144 hours</span>
+            </div>
           </div>
         </div>
-
-        <div class="calc-result">
-          <div class="calc-result__row calc-result__row--big">
-            <span class="calc-result__label">Annual cost of this one task</span>
-            <span class="calc-result__value calc-result__value--big" id="annual">AUD 6,480</span>
-          </div>
-          <div class="calc-result__row">
-            <span class="calc-result__label">Over three years</span>
-            <span class="calc-result__value" id="threeYear">AUD 19,440</span>
-          </div>
-          <div class="calc-result__row">
-            <span class="calc-result__label">Hours returned to the team per year</span>
-            <span class="calc-result__value" id="hoursYear">144 hours</span>
-          </div>
-        </div>
-
-        <div class="calc-foot">
-          <div class="calc-foot__note">Most people I see find three to five tasks like this during our first call. That's the point of the call: to see if there's enough in the pipe to make working together worth it.</div>
-          <a class="btn btn--ember" href="#" data-cal-link="reinier-van-vuure-3rlsah/introductory-call" data-cal-config='{"layout":"month_view"}'>Book a 20-minute call</a>
-        </div>
+      </div>
+      <div class="calc-note section-copy">
+        <p>But the direct cost is only part of the story. Those 144 hours do not just disappear from a spreadsheet. They belong to a person who could be doing something else. Something that moves revenue, tightens margins, or closes a problem that has been sitting on the shelf for months because there was never enough time to get to it. The real question is not just what the task costs; it is what is not getting done because of it.</p>
+        <p>Most people I see find three to five tasks like this during our first call. That's the point of the call: to see if there's enough in the pipe to make working together worth it.</p>
       </div>
     </div>
   </section>
 
   <!-- 03 HOW IT WORKS -->
   <section id="how">
-    <div class="container--wide">
-      <span class="sec-num">03 — How it works</span>
-      <h2>Four steps. No surprises.</h2>
-      <p class="lead">Some of this is fixed price, some of it's quoted against a written plan, and some of it's hourly. What you won't see is an "it depends" that turns into a retainer.</p>
+    <div class="container">
 
-      <div class="flow-grid">
-        <div class="flow-arrow flow-arrow--r1">
-          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="5,3 10,7 5,11"/></svg></div>
-        </div>
-        <div class="flow-arrow flow-arrow--down">
-          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="3,5 7,10 11,5"/></svg></div>
-        </div>
-        <div class="flow-arrow flow-arrow--r2">
-          <div class="flow-arrow__icon"><svg viewBox="0 0 14 14"><polyline points="5,3 10,7 5,11"/></svg></div>
-        </div>
-
-        <div class="card">
-          <div class="card__num">Step 01</div>
-          <h3>Introductory call</h3>
-          <p>Non-binding. We talk through what you do, where the friction is, and who on your team I'd need to spend time with. We will also discuss your tech stack to find quick wins. If by the end we both think there's something here, we book step two. If not, we part ways with no invoice and no follow-up sales call.</p>
-          <div class="card__price">Free · 20 minutes</div>
-        </div>
-
-        <div class="card">
-          <div class="card__num">Step 02</div>
-          <h3>On-site visit and written plan</h3>
-          <p>I come to you, walk the floor, and sit with the people who actually do the work. Afterwards you get a written plan naming the processes worth automating, how each one would be built, and what I'd need from your end. Fixed fee, one deliverable, no surprises.</p>
-          <div class="card__price">AUD 500 · 2 hours on-site</div>
-        </div>
-
-        <div class="card">
-          <div class="card__num">Step 03</div>
-          <h3>Pilot Automation Build</h3>
-          <p>If the plan makes sense, I quote the first build against it. Scope is fixed before we start, the work runs two weeks, and what you get at the end is installed, tested, and handed over so your team can run it without me.</p>
-          <div class="card__price">Quoted · 2 weeks</div>
-        </div>
-
-        <div class="card">
-          <div class="card__num">Step 04</div>
-          <h3>Build warranty, then a review</h3>
-          <p>For the first three months after go-live, if anything breaks I fix it at no charge. After that we sit down for a review, look at what's working, what needs tuning, and what to build next. Reviews and follow-on work are billed at AUD 150 per hour. No monthly retainer, no lock-in.</p>
-          <div class="card__price">Included, then AUD 150/hour</div>
-        </div>
+      <div class="how-header">
+        <span class="how-label">The process</span>
+        <h2>How it works</h2>
+        <p class="how-intro">A practical, low-risk process from first conversation to running automation. No big commitments upfront.</p>
       </div>
 
-      <div class="pull">
-        No monthly fee. No surprise invoices. You pay for the visit, the build, and anything you ask me to do after that. Everything in between is on me.
+      <!-- Flow diagram -->
+      <div class="v2-flow-outer">
+
+        <!-- Left pill toggle -->
+        <button class="v2-detail-pill" id="v2-detail-pill" aria-expanded="false">More detail &#9662;</button>
+
+        <div class="v2-flow-container">
+
+          <!-- Background connector line -->
+          <div class="v2-flow-track"></div>
+
+          <!-- Steps -->
+          <div class="v2-flow-steps">
+
+            <!-- Step 1: Discovery (active/highlighted — Phase 1) -->
+            <div class="v2-step v2-step--active v2-step--phase1">
+              <div class="v2-step-top">
+                <div class="v2-step-number">01</div>
+              </div>
+              <div class="v2-step-body">
+                <span class="v2-step-timeframe">30–60 minutes</span>
+                <div class="v2-step-name">Discovery</div>
+                <div class="v2-step-tagline">One conversation to find out if there's something worth fixing.</div>
+                <div class="v2-step-description-wrap">
+                  <div class="v2-step-description">
+                    We start with a conversation. You walk us through the workflow causing the most friction — the one that eats hours, creates double-handling, or keeps breaking down at the handoff. We ask questions and listen.<br><br>This conversation costs you nothing. But it's not a soft intro. We'll talk through what's actually possible, what a fix would involve, and what it would realistically cost. You leave with clarity, not a sales pitch.
+                  </div>
+                </div>
+                <div class="v2-step-deliverable">
+                  <div class="v2-deliverable-label">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="6" fill="rgba(232,97,26,0.25)"/>
+                      <path d="M3.5 6L5.5 8L8.5 4" stroke="#E8611A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    You get
+                  </div>
+                  <div class="v2-deliverable-text">A clear picture of whether there's an opportunity worth pursuing — and enough information to decide with confidence.</div>
+                </div>
+              </div>
+              <div class="v2-step-phase-band">No obligation / On us</div>
+            </div>
+
+            <!-- Step 2: Workflow Audit (Phase 1) -->
+            <div class="v2-step v2-step--phase1">
+              <div class="v2-step-top">
+                <div class="v2-step-number">02</div>
+              </div>
+              <div class="v2-step-body">
+                <span class="v2-step-timeframe">3–5 days</span>
+                <div class="v2-step-name">Workflow Audit</div>
+                <div class="v2-step-tagline">Map how the work actually moves, not how it's supposed to.</div>
+                <div class="v2-step-description-wrap">
+                  <div class="v2-step-description">
+                    We trace the workflow from start to finish: which systems are involved, where information gets re-entered, where it stalls, and where the manual steps are hiding. This might mean walking through your Outlook setup, your Xero process, your field reporting routine, or your weekly reporting run. We document what we find in plain language.<br><br>This step is also at <span class="brand-fire">fire</span><span class="brand-rain">rain</span>'s cost. No invoice, no obligation. At the end, you'll have a real map of how your workflow actually runs, a ranked list of where time is being lost, and a clear sense of what it would cost to fix. After this step, the decision is yours.
+                  </div>
+                </div>
+                <div class="v2-step-deliverable">
+                  <div class="v2-deliverable-label">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="6" fill="rgba(74,143,232,0.2)"/>
+                      <path d="M3.5 6L5.5 8L8.5 4" stroke="#4a8fe8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    You get
+                  </div>
+                  <div class="v2-deliverable-text">A current-state workflow map with bottlenecks and gaps identified, ranked by impact, with cost context attached.</div>
+                </div>
+              </div>
+              <div class="v2-step-phase-band">No obligation / On us</div>
+            </div>
+
+            <!-- Phase divider: Your decision point -->
+            <div class="v2-phase-divider" aria-hidden="true">
+              <div class="v2-phase-divider__line"></div>
+              <div class="v2-phase-divider__label">Your decision point</div>
+              <div class="v2-phase-divider__arrow">&#8250;</div>
+            </div>
+
+            <!-- Step 3: Prioritisation and Roadmap -->
+            <div class="v2-step">
+              <div class="v2-step-top">
+                <div class="v2-step-number">03</div>
+              </div>
+              <div class="v2-step-body">
+                <span class="v2-step-timeframe">3–5 days</span>
+                <div class="v2-step-name">Prioritisation and Roadmap</div>
+                <div class="v2-step-tagline">Pick the one workflow worth fixing first, and plan from there.</div>
+                <div class="v2-step-description-wrap">
+                  <div class="v2-step-description">
+                    Not everything gets fixed at once. We review the audit findings and identify the opportunities with the clearest business value and the lowest delivery risk. The output is a practical plan — usually one clear first step, with a logical sequence behind it if more work follows.
+                  </div>
+                </div>
+                <div class="v2-step-deliverable">
+                  <div class="v2-deliverable-label">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="6" fill="rgba(74,143,232,0.2)"/>
+                      <path d="M3.5 6L5.5 8L8.5 4" stroke="#4a8fe8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    You get
+                  </div>
+                  <div class="v2-deliverable-text">A priority shortlist, quick wins identified, and a phased roadmap with a defined starting point.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4: Pilot Automation -->
+            <div class="v2-step">
+              <div class="v2-step-top">
+                <div class="v2-step-number">04</div>
+              </div>
+              <div class="v2-step-body">
+                <span class="v2-step-timeframe">2–4 weeks</span>
+                <div class="v2-step-name">Pilot Automation</div>
+                <div class="v2-step-tagline">Build one focused solution, prove the value, then decide what's next.</div>
+                <div class="v2-step-description-wrap">
+                  <div class="v2-step-description">
+                    The first project is deliberately scoped tight. It might be pulling invoice data from email attachments into Xero, automating a field report template, or connecting a form submission to a SharePoint list. We build and test it, you see it working, and we refine before anything larger gets committed.
+                  </div>
+                </div>
+                <div class="v2-step-deliverable">
+                  <div class="v2-deliverable-label">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="6" fill="rgba(74,143,232,0.2)"/>
+                      <path d="M3.5 6L5.5 8L8.5 4" stroke="#4a8fe8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    You get
+                  </div>
+                  <div class="v2-deliverable-text">A working automation for one workflow, tested and handed over, with a clear before-and-after result.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5: Integration and Expansion -->
+            <div class="v2-step">
+              <div class="v2-step-top">
+                <div class="v2-step-number">05</div>
+              </div>
+              <div class="v2-step-body">
+                <span class="v2-step-timeframe">2–6 weeks per expansion</span>
+                <div class="v2-step-name">Integration and Expansion</div>
+                <div class="v2-step-tagline">Connect the systems, scale the gains, keep it practical.</div>
+                <div class="v2-step-description-wrap">
+                  <div class="v2-step-description">
+                    Once the pilot proves itself, we extend the approach into adjacent workflows and integrations. That might mean connecting Outlook to Xero, feeding Power BI from four existing data sources, or routing field inputs into SharePoint automatically. Each step is deliberate — no runaway scope, no solutions bigger than the problem.
+                  </div>
+                </div>
+                <div class="v2-step-deliverable">
+                  <div class="v2-deliverable-label">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                      <circle cx="6" cy="6" r="6" fill="rgba(74,143,232,0.2)"/>
+                      <path d="M3.5 6L5.5 8L8.5 4" stroke="#4a8fe8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    You get
+                  </div>
+                  <div class="v2-deliverable-text">A growing network of connected, automated workflows — each one building on the last.</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /.v2-flow-steps -->
+        </div><!-- /.v2-flow-container -->
+      </div><!-- /.v2-flow-outer -->
+
+      <!-- Footer note -->
+      <div class="v2-flow-footer">
+        <p>Every engagement starts with the discovery conversation. No invoice, no obligation to go further.</p>
       </div>
+
     </div>
   </section>
 
   <!-- 04 ABOUT -->
   <section id="about">
     <div class="container">
-      <span class="sec-num">04 — Thirty years</span>
-      <div class="about-header">
+      <div class="section-copy">
         <h2>Thirty years of operations. That's why this works.</h2>
-        <img class="about-header__photo" src="assets/logos/founder-reinier.jpg" alt="Reinier van Vuure">
+        <img class="about-header__photo" src="assets/graphics/founder-reinier.jpg" alt="Reinier van Vuure">
+        <p>I've spent my career running operations — international FMCG, retail distribution, manufacturing, logistics. I've managed operations, finance, supply chains on four continents and built reporting systems for businesses that had nothing but spreadsheets and a whiteboard.</p>
+        <p>A 25-year-old automation developer can build the same technical solution I can. What they can't do is walk into your business and tell you which spreadsheet is load-bearing and which one is make-work. That triage is the hard part. Being tool-agnostic and independent is the rest of it — and nobody else in this market is offering both.</p>
+        <p>I started Firerain because I kept meeting people who knew AI could help but couldn't find someone who understood their operation well enough to actually deliver it.</p>
       </div>
-      <p>I've spent my career running operations — international FMCG, retail distribution, manufacturing, logistics. I've managed operations, finance, supply chains on four continents and built reporting systems for businesses that had nothing but spreadsheets and a whiteboard.</p>
-      <p>A 25-year-old automation developer can build the same technical solution I can. What they can't do is walk into your business and tell you which spreadsheet is load-bearing and which one is make-work. That triage and being tool/system agnostic and independent is the part nobody else in this market is offering.</p>
-      <p>I started Firerain because I kept meeting people who knew AI could help but couldn't find someone who understood their operation well enough to actually deliver it.</p>
     </div>
   </section>
 
   <!-- 05 MANIFESTO -->
   <section id="believe">
     <div class="container">
-      <span class="sec-num">05 — What I believe</span>
-      <h2>A few things I'm sure of.</h2>
-
-      <div class="manifesto">
+      <div class="section-copy manifesto">
+        <h2>A few things I'm sure of.</h2>
         <p>Most AI consulting is slide decks and strategy. I build things that run on Monday morning and are still running in six months.</p>
         <p>The people who sell automation don't understand operations. The people who understand operations don't build automation. I do both, and that's the whole job.</p>
         <p>Your team's time is the point. Everything else — the AI, the dashboards, the integrations — is just a way of getting it back.</p>
@@ -951,45 +477,85 @@
   <!-- 06 CONTACT -->
   <section id="contact">
     <div class="container">
-      <span class="sec-num">06 — Contact</span>
-      <h2>Let's look at <em>one</em> workflow that's costing you time every week.</h2>
-      <p class="lead">Tell me a bit about what's on your mind. I'll come back within a day.</p>
+      <div class="section-copy">
+        <h2>Let's look at <em>one</em> workflow that's costing you time every week.</h2>
+        <p class="lead">Tell me a bit about what's on your mind. I'll come back within a day.</p>
+      </div>
 
-      <form class="form" action="https://api.web3forms.com/submit" method="POST">
-        <input type="hidden" name="access_key" value="0543b989-ec46-4273-91f6-478aa0e04858">
-        <input type="hidden" name="subject" value="New enquiry from firerain.ai">
-        <input type="hidden" name="from_name" value="Firerain Website">
-        <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-        <div>
-          <label for="n">Your name</label>
-          <input id="n" name="name" type="text" placeholder="Joe Bloggs" required>
-        </div>
-        <div>
-          <label for="b">Business</label>
-          <input id="b" name="business" type="text" placeholder="The World's Best Company">
-        </div>
-        <div class="full">
-          <label for="e">Email</label>
-          <input id="e" name="email" type="email" placeholder="joe@worldsbestcompany.com.au" required>
-        </div>
-        <div class="full">
-          <label for="m">What's on your mind?</label>
-          <textarea id="m" name="message" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit." required></textarea>
-        </div>
-        <div class="full">
-          <button class="btn btn--ember form__submit" type="submit">Send it over</button>
-        </div>
-        <div class="form__meta">
-          <span>info@firerain.ai</span>
-          <span>Barossa Valley · South Australia</span>
-        </div>
-      </form>
+      <div class="section-block">
+        <form class="form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="0543b989-ec46-4273-91f6-478aa0e04858">
+          <input type="hidden" name="subject" value="New enquiry from firerain.ai">
+          <input type="hidden" name="from_name" value="Firerain Website">
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+          <div>
+            <label for="n">Your name</label>
+            <input id="n" name="name" type="text" placeholder="Joe Bloggs" required>
+          </div>
+          <div>
+            <label for="b">Business</label>
+            <input id="b" name="business" type="text" placeholder="The World's Best Company">
+          </div>
+          <div class="full">
+            <label for="e">Email</label>
+            <input id="e" name="email" type="email" placeholder="joe@worldsbestcompany.com.au" required>
+          </div>
+          <div class="full">
+            <label for="m">What's on your mind?</label>
+            <textarea id="m" name="message" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit." required></textarea>
+          </div>
+          <div class="full">
+            <button class="btn btn--ember form__submit" type="submit">Send it over</button>
+          </div>
+          <div class="form__meta">
+            <span>info@firerain.ai</span>
+            <span>Australia</span>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
 </main>
 
 <script>
+  // ---------- Theme toggle ----------
+  const root = document.documentElement;
+  const themeBtn = document.querySelector('.theme-toggle');
+  const logo = document.querySelector('.brand__mark');
+  const favicon = document.getElementById('favicon');
+
+  const LOGOS = {
+    dark:  'assets/logos/firerain-logo-transparent-white-orange.svg',
+    light: 'assets/logos/firerain-logo-transparent-white-orange.svg'
+  };
+  const FAVICONS = {
+    dark:  'assets/logos/firerain-icon-transparent-white-orange.svg',
+    light: 'assets/logos/firerain-icon-transparent-navy-orange.svg'
+  };
+
+  const labels = { dark: 'Prefer the light?', light: 'Prefer the dark?' };
+
+  function applyTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    if (logo) logo.src = LOGOS[theme];
+    if (favicon) favicon.href = FAVICONS[theme];
+    localStorage.setItem('fr-theme', theme);
+    const labelEl = themeBtn ? themeBtn.querySelector('.theme-toggle__label') : null;
+    if (labelEl) labelEl.textContent = labels[theme];
+  }
+
+  // Load saved preference — default to dark (current look)
+  var initialTheme = localStorage.getItem('fr-theme') || 'dark';
+  applyTheme(initialTheme);
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function() {
+      var current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+  }
+
   // ---------- ROI calculator ----------
   const fmt = n => 'AUD ' + Math.round(n).toLocaleString('en-AU');
   const $hours = document.getElementById('hours');
@@ -1026,6 +592,138 @@
     });
   }, { rootMargin: '-40% 0px -55% 0px' });
   sections.forEach(s => io.observe(s));
+
+  (function () {
+    const svg = document.querySelector('.hero-diagram__svg');
+    if (!svg) return;
+
+    const nodes = {
+      decision: svg.querySelector('#hero-flow-node-decision'),
+      envelope: svg.querySelector('#hero-flow-node-envelope'),
+      process: svg.querySelector('#hero-flow-node-process'),
+      merge: svg.querySelector('#hero-flow-node-merge'),
+      lower: svg.querySelector('#hero-flow-node-lower'),
+      final: svg.querySelector('#hero-flow-node-final')
+    };
+
+    function path(id) {
+      return svg.querySelector(`#${id}`);
+    }
+
+    const flows = [
+      {
+        dot: svg.querySelector('#hero-flow-dot-orange'),
+        offset: 0,
+        steps: [
+          { kind: 'path', el: path('hero-flow-path-top-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 232, node: nodes.decision, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-left-branch'), duration: 2400 },
+          { kind: 'pause', x: 260, y: 548, node: nodes.process, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-left-merge'), duration: 2200 },
+          { kind: 'pause', x: 412, y: 708, node: nodes.lower, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-bottom-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 826, node: nodes.final, duration: 1800 }
+        ]
+      },
+      {
+        dot: svg.querySelector('#hero-flow-dot-blue'),
+        offset: 1400,
+        steps: [
+          { kind: 'path', el: path('hero-flow-path-top-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 232, node: nodes.decision, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-right-branch-a'), duration: 1400 },
+          { kind: 'pause', x: 548, y: 300, node: nodes.envelope, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-right-branch-b'), duration: 2200 },
+          { kind: 'pause', x: 412, y: 512, node: nodes.merge, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-lower-link'), duration: 1500 },
+          { kind: 'pause', x: 412, y: 708, node: nodes.lower, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-bottom-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 826, node: nodes.final, duration: 1800 }
+        ]
+      },
+      {
+        dot: svg.querySelector('#hero-flow-dot-green'),
+        offset: 3200,
+        steps: [
+          { kind: 'path', el: path('hero-flow-path-top-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 232, node: nodes.decision, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-right-branch-a'), duration: 1400 },
+          { kind: 'pause', x: 548, y: 300, node: nodes.envelope, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-right-branch-b'), duration: 2200 },
+          { kind: 'pause', x: 412, y: 512, node: nodes.merge, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-lower-link'), duration: 1500 },
+          { kind: 'pause', x: 412, y: 708, node: nodes.lower, duration: 2000 },
+          { kind: 'path', el: path('hero-flow-path-bottom-link'), duration: 1200 },
+          { kind: 'pause', x: 412, y: 826, node: nodes.final, duration: 1800 }
+        ]
+      }
+    ];
+
+    let start = performance.now();
+
+    function placeOnPath(dot, pathEl, progress) {
+      const length = pathEl.getTotalLength();
+      const point = pathEl.getPointAtLength(Math.max(0, Math.min(1, progress)) * length);
+      dot.setAttribute('cx', point.x);
+      dot.setAttribute('cy', point.y);
+    }
+
+    function render(now) {
+      const elapsed = now - start;
+      const activeNodes = new Set();
+
+      flows.forEach((flow) => {
+        const totalDuration = flow.steps.reduce((sum, step) => sum + step.duration, 0);
+        let local = (elapsed + flow.offset) % totalDuration;
+
+        for (const step of flow.steps) {
+          if (local >= step.duration) {
+            local -= step.duration;
+            continue;
+          }
+
+          if (step.kind === 'path') {
+            placeOnPath(flow.dot, step.el, local / step.duration);
+          } else {
+            flow.dot.setAttribute('cx', step.x);
+            flow.dot.setAttribute('cy', step.y);
+            activeNodes.add(step.node);
+          }
+          break;
+        }
+      });
+
+      Object.values(nodes).forEach((node) => {
+        node.classList.toggle('is-active', activeNodes.has(node));
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    requestAnimationFrame(render);
+  })();
+</script>
+
+<!-- Process flow expand/collapse — single left pill -->
+<script>
+  (function() {
+    var pill = document.getElementById('v2-detail-pill');
+    if (!pill) return;
+    var wraps = document.querySelectorAll('.v2-step-description-wrap');
+
+    pill.addEventListener('click', function() {
+      var isOpen = this.getAttribute('aria-expanded') === 'true';
+      if (isOpen) {
+        wraps.forEach(function(w) { w.classList.remove('is-open'); });
+        pill.setAttribute('aria-expanded', 'false');
+        pill.innerHTML = 'More detail &#9662;';
+      } else {
+        wraps.forEach(function(w) { w.classList.add('is-open'); });
+        pill.setAttribute('aria-expanded', 'true');
+        pill.innerHTML = 'Less &#9652;';
+      }
+    });
+  })();
 </script>
 
 <!-- Cal.com popup modal embed -->
