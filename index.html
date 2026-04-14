@@ -565,7 +565,13 @@
             <textarea id="m" name="message" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit." required></textarea>
           </div>
           <div class="full">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAC9C--aTh8F1UZuZ"></div>
+            <div id="cf-turnstile-widget"
+                 class="cf-turnstile"
+                 data-sitekey="0x4AAAAAAC9C--aTh8F1UZuZ"
+                 data-callback="frTurnstileCallback"
+                 data-error-callback="frTurnstileError"
+                 data-execution="execute">
+            </div>
           </div>
           <div class="full">
             <button class="btn btn--ember form__submit" type="submit">Send it over</button>
@@ -617,14 +623,42 @@
           var form = document.getElementById('contact-form');
           var successEl = document.getElementById('form-success');
           var errorEl = document.getElementById('form-error');
+          var waitingToSubmit = false;
+
+          // Called by Turnstile when invisible challenge completes
+          window.frTurnstileCallback = function () {
+            if (waitingToSubmit) {
+              waitingToSubmit = false;
+              doSubmit();
+            }
+          };
+
+          // Called by Turnstile if challenge errors
+          window.frTurnstileError = function () {
+            waitingToSubmit = false;
+            errorEl.textContent = 'Security check failed. Please refresh and try again.';
+            errorEl.style.display = 'block';
+            errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          };
 
           form.addEventListener('submit', function (e) {
             e.preventDefault();
             successEl.style.display = 'none';
             errorEl.style.display = 'none';
 
-            var data = new FormData(form);
+            if (window.turnstile) {
+              // Trigger the invisible challenge; frTurnstileCallback will call doSubmit
+              waitingToSubmit = true;
+              window.turnstile.execute('#cf-turnstile-widget');
+            } else {
+              // Turnstile script not loaded (e.g. ad-blocker) — submit anyway;
+              // server will reject if bot-like, real users typically pass
+              doSubmit();
+            }
+          });
 
+          function doSubmit() {
+            var data = new FormData(form);
             fetch('/api/contact', {
               method: 'POST',
               body: data,
@@ -633,7 +667,7 @@
               .then(function (json) {
                 if (json.success) {
                   form.reset();
-                  if (window.turnstile) { window.turnstile.reset(); }
+                  if (window.turnstile) { window.turnstile.reset('#cf-turnstile-widget'); }
                   successEl.style.display = 'block';
                   successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 } else {
@@ -643,10 +677,11 @@
                 }
               })
               .catch(function () {
+                errorEl.textContent = 'Something went wrong. Please try again or email us directly.';
                 errorEl.style.display = 'block';
                 errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
               });
-          });
+          }
         })();
       </script>
     </div>
