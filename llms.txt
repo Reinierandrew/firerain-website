@@ -1,0 +1,31 @@
+# Firerain
+
+> Workflow automation for small and medium businesses in Australia.
+
+Firerain is run by Reinier van Vuure, a 30-year operations veteran based in the Barossa Valley, South Australia. Firerain finds the manual, repetitive workflows that are costing SMEs time and money, and builds practical automation fixes — no lock-in, no retainers, no hype.
+
+## What Firerain does
+
+- Identifies workflows worth automating through a free discovery call and workflow audit
+- Builds practical automation using tools like Microsoft 365, Xero, Claude, and OpenAI
+- Delivers working solutions in 2–4 weeks, tested and handed over so your team can run them
+- Covers invoice processing, field reporting, approval routing, data entry elimination, and more
+
+## Who this is for
+
+Small and medium businesses in Australia that are drowning in manual work: re-keying data between systems, chasing approvals, stitching reports together by hand every week.
+
+## Contact
+
+- Website: https://firerain.ai
+- Email: info@firerain.ai
+- Location: Barossa Valley, South Australia, Australia
+- Book a free 20-minute call: https://firerain.ai/#contact
+
+## Process
+
+1. Free discovery call (20 min) — no obligation
+2. Free workflow audit (3–5 days) — maps the actual workflow, ranked by impact
+3. Your decision point — you choose whether to proceed
+4. Pilot automation build (2–4 weeks) — fixed scope, fixed price
+5. Integration and expansion — hourly, no retainer
