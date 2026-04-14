@@ -6,3 +6,6 @@ compatibility_flags = ["nodejs_compat"]
 [assets]
 directory = "./"
 not_found_handling = "404-page"
+
+[[send_email]]
+name = "EMAIL"

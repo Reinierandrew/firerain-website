@@ -4,6 +4,8 @@
  * - Everything else    → static assets
  */
 
+import { EmailMessage } from 'cloudflare:email';
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -61,7 +63,7 @@ async function handleContact(request, env) {
 
   // Verify Turnstile
   const ip = request.headers.get('CF-Connecting-IP') || '';
-  const tsResult = await fetch('https://challenges.cloudflare.com/turnstile/v1/siteverify', {
+  const tsResult = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ secret: env.TURNSTILE_SECRET_KEY, response: turnstileToken, remoteip: ip }),
@@ -70,16 +72,19 @@ async function handleContact(request, env) {
   if (!tsResult.success)
     return jsonResponse({ success: false, error: 'Security check failed. Please try again.' }, 422, request);
 
-  // Send email
+  // Send email via Cloudflare Email Workers
   try {
     const { text, html } = buildEmailBody({ name, business, email, message });
-    await env.EMAIL.send({
-      from: { name: 'Firerain Website', email: 'info@firerain.ai' },
-      to:   [{ name: 'Firerain', email: 'info@firerain.ai' }],
+    const rawEmail = buildMimeEmail({
+      from: 'info@firerain.ai',
+      fromName: 'Firerain Website',
+      to: 'info@firerain.ai',
       subject: `New enquiry from firerain.ai — ${name}`,
       text,
       html,
     });
+    const emailMsg = new EmailMessage('info@firerain.ai', 'info@firerain.ai', rawEmail);
+    await env.EMAIL.send(emailMsg);
   } catch (err) {
     console.error('Email send error:', err);
     return jsonResponse({ success: false, error: 'Failed to send message. Please try again shortly.' }, 500, request);
@@ -89,6 +94,30 @@ async function handleContact(request, env) {
 }
 
 // --- Helpers ---
+
+function buildMimeEmail({ from, fromName, to, subject, text, html }) {
+  const boundary = 'cfbnd' + Math.random().toString(36).slice(2, 14);
+  const lines = [
+    `From: ${fromName} <${from}>`,
+    `To: ${to}`,
+    `Subject: ${subject}`,
+    `MIME-Version: 1.0`,
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    ``,
+    `--${boundary}`,
+    `Content-Type: text/plain; charset=utf-8`,
+    ``,
+    text,
+    ``,
+    `--${boundary}`,
+    `Content-Type: text/html; charset=utf-8`,
+    ``,
+    html,
+    ``,
+    `--${boundary}--`,
+  ];
+  return lines.join('\r\n');
+}
 
 function buildEmailBody({ name, business, email, message }) {
   const businessLine = business ? `Business: ${business}\n` : '';
