@@ -78,12 +78,12 @@ async function handleContact(request, env) {
     const rawEmail = buildMimeEmail({
       from: 'info@firerain.ai',
       fromName: 'Firerain Website',
-      to: 'info@firerain.ai',
+      to: 'reinier@firerain.ai',
       subject: `New enquiry from firerain.ai — ${name}`,
       text,
       html,
     });
-    const emailMsg = new EmailMessage('info@firerain.ai', 'info@firerain.ai', rawEmail);
+    const emailMsg = new EmailMessage('info@firerain.ai', 'reinier@firerain.ai', rawEmail);
     await env.EMAIL.send(emailMsg);
   } catch (err) {
     console.error('Email send error:', err);
