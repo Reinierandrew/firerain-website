@@ -6,16 +6,80 @@
 <title>Firerain — Workflow automation for small businesses</title>
 <meta name="description" content="Thirty years in operations. I find the tasks that are eating your week and build the fix. We start with a 20-minute call so we can both decide whether it's worth going further.">
 <link rel="icon" type="image/svg+xml" href="assets/logos/firerain-icon-transparent-white-orange.svg" id="favicon">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://firerain.ai/">
+
+<!-- Open Graph (social sharing — LinkedIn, Slack, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://firerain.ai/">
+<meta property="og:title" content="Firerain — Workflow Automation for Small Business">
+<meta property="og:description" content="Thirty years in operations. I find the workflows eating your week and build the fix. Practical automation for SMEs — no hype, no lock-in.">
+<meta property="og:image" content="https://firerain.ai/assets/logos/firerain-logo-transparent-navy-orange.svg">
+<meta property="og:site_name" content="Firerain">
+<meta property="og:locale" content="en_AU">
+
+<!-- Twitter/X card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Firerain — Workflow Automation for Small Business">
+<meta name="twitter:description" content="Thirty years in operations. I find the workflows eating your week and build the fix. Practical automation for SMEs — no hype, no lock-in.">
+
+<!-- Additional SEO -->
+<meta name="author" content="Reinier van Vuure">
+<meta name="robots" content="index, follow">
+<meta name="geo.region" content="AU-SA">
+<meta name="geo.placename" content="Barossa Valley, South Australia">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script src="https://challenges.cloudflare.com/turnstile/v1/api.js" async defer></script>
 <!-- Apply saved theme before paint to avoid flash -->
 <script>
   (function() {
     var saved = localStorage.getItem('fr-theme') || 'light';
     document.documentElement.setAttribute('data-theme', saved);
   })();
+</script>
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Firerain",
+  "description": "Workflow automation for small and medium businesses. Practical AI and process automation installed by a 30-year operations veteran.",
+  "url": "https://firerain.ai",
+  "founder": {
+    "@type": "Person",
+    "name": "Reinier van Vuure"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Australia"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "SA",
+    "addressCountry": "AU"
+  },
+  "serviceType": [
+    "Workflow Automation",
+    "Business Process Automation",
+    "AI Integration",
+    "Operations Consulting"
+  ],
+  "priceRange": "AUD 500+",
+  "knowsAbout": [
+    "Workflow automation",
+    "AI tools for business",
+    "Xero integration",
+    "Microsoft 365 automation",
+    "Supply chain operations",
+    "SME operations"
+  ]
+}
 </script>
 </head>
 <body>
@@ -50,7 +114,7 @@
       <span class="cta-side__price">NO OBLIGATION · NO COST</span>
     </a>
     <div class="sidebar__email">
-      <a href="mailto:info@firerain.ai">info@firerain.ai</a>
+      <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#102;&#105;&#114;&#101;&#114;&#97;&#105;&#110;&#46;&#97;&#105;">Email us</a>
     </div>
   </div>
 </aside>
@@ -483,11 +547,7 @@
       </div>
 
       <div class="section-block">
-        <form class="form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="0543b989-ec46-4273-91f6-478aa0e04858">
-          <input type="hidden" name="subject" value="New enquiry from firerain.ai">
-          <input type="hidden" name="from_name" value="Firerain Website">
-          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+        <form class="form" id="contact-form" action="/api/contact" method="POST">
           <div>
             <label for="n">Your name</label>
             <input id="n" name="name" type="text" placeholder="Joe Bloggs" required>
@@ -505,14 +565,90 @@
             <textarea id="m" name="message" placeholder="One thing in your week that shouldn't still be manual. Include a good time to schedule a call or a visit." required></textarea>
           </div>
           <div class="full">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAC9C--aTh8F1UZuZ"></div>
+          </div>
+          <div class="full">
             <button class="btn btn--ember form__submit" type="submit">Send it over</button>
           </div>
           <div class="form__meta">
-            <span>info@firerain.ai</span>
+            <span>Sent directly to our team</span>
             <span>Australia</span>
           </div>
         </form>
+
+        <div id="form-success" style="display:none" class="form-banner form-banner--success">
+          Message sent. I'll be back to you within a day.
+        </div>
+        <div id="form-error" style="display:none" class="form-banner form-banner--error">
+          Something went wrong. Please try again or email info@firerain.ai directly.
+        </div>
       </div>
+
+      <style>
+        .form-banner {
+          margin-top: 1.5rem;
+          padding: 1rem 1.25rem;
+          border-radius: 6px;
+          font-size: 0.95rem;
+          line-height: 1.5;
+        }
+        .form-banner--success {
+          background: rgba(34, 197, 94, 0.12);
+          border: 1px solid rgba(34, 197, 94, 0.4);
+          color: #16a34a;
+        }
+        [data-theme="dark"] .form-banner--success {
+          background: rgba(34, 197, 94, 0.10);
+          color: #4ade80;
+        }
+        .form-banner--error {
+          background: rgba(239, 68, 68, 0.10);
+          border: 1px solid rgba(239, 68, 68, 0.35);
+          color: #dc2626;
+        }
+        [data-theme="dark"] .form-banner--error {
+          background: rgba(239, 68, 68, 0.10);
+          color: #f87171;
+        }
+      </style>
+
+      <script>
+        (function () {
+          var form = document.getElementById('contact-form');
+          var successEl = document.getElementById('form-success');
+          var errorEl = document.getElementById('form-error');
+
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            successEl.style.display = 'none';
+            errorEl.style.display = 'none';
+
+            var data = new FormData(form);
+
+            fetch('/api/contact', {
+              method: 'POST',
+              body: data,
+            })
+              .then(function (res) { return res.json(); })
+              .then(function (json) {
+                if (json.success) {
+                  form.reset();
+                  if (window.turnstile) { window.turnstile.reset(); }
+                  successEl.style.display = 'block';
+                  successEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                  errorEl.textContent = json.error || 'Something went wrong. Please try again.';
+                  errorEl.style.display = 'block';
+                  errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+              })
+              .catch(function () {
+                errorEl.style.display = 'block';
+                errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              });
+          });
+        })();
+      </script>
     </div>
   </section>
 

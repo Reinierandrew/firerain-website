@@ -1,0 +1,8 @@
+name = "firerain-website"
+main = "worker.js"
+compatibility_date = "2026-04-14"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./"
+not_found_handling = "404-page"
