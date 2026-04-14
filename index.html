@@ -13,8 +13,8 @@
 <!-- Apply saved theme before paint to avoid flash -->
 <script>
   (function() {
-    var saved = localStorage.getItem('fr-theme');
-    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    var saved = localStorage.getItem('fr-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
   })();
 </script>
 </head>
@@ -545,8 +545,8 @@
     if (labelEl) labelEl.textContent = labels[theme];
   }
 
-  // Load saved preference — default to dark (current look)
-  var initialTheme = localStorage.getItem('fr-theme') || 'dark';
+  // Load saved preference — default to light
+  var initialTheme = localStorage.getItem('fr-theme') || 'light';
   applyTheme(initialTheme);
 
   if (themeBtn) {
